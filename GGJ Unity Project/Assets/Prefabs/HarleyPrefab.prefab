@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 713658127852056952}
   m_Layer: 0
   m_Name: HarleyPrefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -299,3 +299,4 @@ MonoBehaviour:
   Health: 100
   Damage: 5
   MaskFlipConsentH: 0
+  perryPlayer: {fileID: -1232152298516613003, guid: 2ec2582796177234f99cd1af07c3e5f9, type: 3}
