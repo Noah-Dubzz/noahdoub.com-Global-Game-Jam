@@ -5,22 +5,18 @@ namespace CHAVIS
     [CreateAssetMenu(fileName = "New Power Up", menuName = "Power Up" )]
     public class PowerUpsSO : ScriptableObject
     {
-        public Material powerUpImage;
-        public string powerUpTxt;
-
-        public PowerUpEffect effectType;
-
-        public float effectValue;
+        public PowerUpEffect powerUpEffect;
+        public float effectValue1;    
+        public float effectValue2;
         public bool isUnique;
     }
 
     public enum PowerUpEffect
     {
-        DamageIncrease,
-        MovementSpeedIncrease,
-        ProjectileSpeedIncrease,
-        AttackSpeedIncrease,
-        ReplenishHealth,
-        BurstShot
+        DashDamageIncrease,
+        TauntDamageIncrease,
+        HealthRegenIncrease,
+        ShieldHealthIncrease,
+        ShieldKBRIncrease
     }
 }

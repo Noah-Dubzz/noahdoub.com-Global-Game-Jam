@@ -110,7 +110,7 @@ namespace CHAVIS
     [System.Serializable]
     public class Wave
     {
-        public Enemy[] enemies;
+        public GameObject[] enemies;
         public float timeToNextEnemy;
         public float timeToNextWave;
 
