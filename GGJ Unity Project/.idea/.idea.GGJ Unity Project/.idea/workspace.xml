@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dd8d50fa-d24a-4f03-9016-068a71a2906d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GGJ Unity Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GGJ Unity Project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Micah/Enemy1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Micah/Enemy1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Micah/bulletObjPool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Micah/bulletObjPool.cs" afterDir="false" />
-    </list>
+    <list default="true" id="dd8d50fa-d24a-4f03-9016-068a71a2906d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
