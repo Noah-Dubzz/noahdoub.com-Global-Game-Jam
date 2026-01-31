@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4604310818608997338}
   - component: {fileID: 6417761138222685763}
   - component: {fileID: 3460974249289048023}
+  - component: {fileID: 713658127852056952}
   m_Layer: 0
   m_Name: HarleyPrefab
   m_TagString: Untagged
@@ -243,6 +244,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 26c18713-7d38-4f8c-9a83-ced58c845c58
     m_ActionName: 'Gameplay/Roll[/Keyboard/backspace]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 713658127852056952}
+        m_TargetAssemblyTypeName: HarleyPlayer, Assembly-CSharp
+        m_MethodName: MaskFlip
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 39b41301-ac60-4b59-ae36-26046035fc9a
+    m_ActionName: Gameplay/MaskFlip
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -267,3 +284,18 @@ MonoBehaviour:
   rollDuration: 0.3
   rollSpeed: 10
   rollCooldown: 2
+--- !u!114 &713658127852056952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8816060740330628025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025b35a108da32046bd79078f8b9ab6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HarleyPlayer
+  Health: 100
+  Damage: 5
+  MaskFlipConsentH: 0
