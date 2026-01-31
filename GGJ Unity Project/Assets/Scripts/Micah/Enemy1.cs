@@ -29,15 +29,21 @@ public class Enemy1 : MonoBehaviour
     void FindTargetPlayer()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        if (Random.value < 0.5f)
+        if (players == null || players.Length == 0)
+        {
+            targetPlayer = null;
+            return;
+        }
+
+        if (players.Length == 1)
         {
             targetPlayer = players[0];
+            Debug.Log(targetPlayer.name);
+            return;
         }
-        else
-        {
-            targetPlayer = players[1];
-        }
-        
+
+        int index = Random.Range(0, players.Length);
+        targetPlayer = players[index];
         Debug.Log(targetPlayer.name);
     }
 
