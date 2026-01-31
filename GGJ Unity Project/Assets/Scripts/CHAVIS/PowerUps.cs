@@ -17,7 +17,7 @@ public class PowerUps : MonoBehaviour
     private void OnMouseDown()
     {
         PowerUpManager.Instance.SelectPowerUp(puInfo);
-        Hero.Instance.ApplyPU(puInfo);
+        //Hero.Instance.ApplyPU(puInfo);
         Time.timeScale = 1f;
     }
 }
