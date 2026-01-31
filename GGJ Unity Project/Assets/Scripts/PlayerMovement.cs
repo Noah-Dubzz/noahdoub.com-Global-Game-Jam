@@ -7,6 +7,13 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] HarleyPlayer Harley;
+    [SerializeField] PerryPlayer Perry;
+
+    [SerializeField] private float HealthRegen = 5f;
+    [SerializeField] private float TickInterval = 5f;
+    [SerializeField] private float Duration = 5f;
+
     [Header("Jumping & overall speed")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpHeight = 2f;
@@ -22,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float DashDuration = 2f;
     [SerializeField] private float DashSpeed = 10f;
     [SerializeField] private float DashCooldown = 2f;
-    private bool canDash = true;
+    public bool canDash = true;
     private bool isDashing;
 
 
@@ -75,6 +82,10 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(RollRoutine());
 
         }
+        if (context.performed && canDash && MaskManager.Instance.Hsupp)
+        {
+            Heal();
+        }
 
     }
 
@@ -118,4 +129,86 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(DashCooldown);
         canDash = true;
     }
+
+    public void Heal()
+    {
+        Debug.Log("Heal Started");
+        if (HarleyPlayer.Instance.Health < Harley.MaxHealth - (Harley.MaxHealth * 0.25f) || Perry.Health < Perry.MaxHealth - (Perry.MaxHealth * 0.25f) )
+        {
+            Debug.Log("Harley: " + HarleyPlayer.Instance.Health);
+            HarleyPlayer.Instance.Health += (HarleyPlayer.Instance.MaxHealth * 0.25f);
+            Debug.Log("Harley: " + HarleyPlayer.Instance.Health);
+            Debug.Log("Perry : " + PerryPlayer.Instance.Health);
+            PerryPlayer.Instance.Health += Mathf.Round((PerryPlayer.Instance.MaxHealth * 0.25f));
+            Debug.Log("Perry : " + PerryPlayer.Instance.Health);
+            StartCoroutine(HealthTickH());
+            
+        }
+
+        if (Perry.Health >= Perry.MaxHealth)
+        {
+            
+            Perry.Health = Perry.MaxHealth;
+        }
+        if (Harley.Health >= Harley.MaxHealth)
+        {
+            Harley.Health = Harley.MaxHealth;
+        }
+
+    }
+    private IEnumerator HealthTickH()
+    {
+        int ticks = 0;
+        while ( Duration * Time.deltaTime> 0)
+        {
+            if (ticks < 7 && Harley.Health < Harley.MaxHealth)
+            {
+                
+                Harley.Health += HealthRegen;
+                yield return new WaitForSeconds(TickInterval);
+                ticks++;
+                
+                
+            }
+            else if (HarleyPlayer.Instance.Health > HarleyPlayer.Instance.MaxHealth)
+            {
+                HarleyPlayer.Instance.Health = HarleyPlayer.Instance.MaxHealth;
+                Debug.Log("break at - Harley: + " + HarleyPlayer.Instance.Health);
+                break;
+            }
+            else
+            {
+                break;
+            }
+
+        }
+        ticks = 0;
+        while (Duration * Time.deltaTime > 0)
+        {
+            if (ticks < 7 && PerryPlayer.Instance.Health < PerryPlayer.Instance.MaxHealth)
+            {
+                PerryPlayer.Instance.Health += HealthRegen;
+                yield return new WaitForSeconds(TickInterval);
+                Debug.Log("perry: + " + PerryPlayer.Instance.Health);
+                ticks++;
+
+
+            }
+            else if (PerryPlayer.Instance.Health > PerryPlayer.Instance.MaxHealth)
+            {
+                PerryPlayer.Instance.Health = PerryPlayer.Instance.MaxHealth;
+                Debug.Log("break at - perry: + " + PerryPlayer.Instance.Health);
+                break;
+            }
+            else 
+            {
+                break;
+            }
+
+        }
+        yield return new WaitForSeconds(TickInterval);
+        canDash = true;
+
+    }
+  
 }

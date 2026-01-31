@@ -4,9 +4,9 @@ using UnityEngine.InputSystem;
 
 public class PerryPlayer : MonoBehaviour
 {
-    [SerializeField] private float Health = 125;
+    public float Health;
     [SerializeField] private float Damage = 5f;
-
+    [SerializeField] public float MaxHealth = 125;
    
     public bool MaskFlipConsentP = false;
     
@@ -17,6 +17,7 @@ public class PerryPlayer : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        Health = 10;
         
     }
     void Start()

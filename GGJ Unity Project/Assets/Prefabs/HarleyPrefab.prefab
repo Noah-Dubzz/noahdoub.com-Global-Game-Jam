@@ -265,12 +265,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b78840219763966468560282b9a1ecd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  Harley: {fileID: 713658127852056952}
+  Perry: {fileID: -1232152298516613003, guid: 2ec2582796177234f99cd1af07c3e5f9, type: 3}
+  HealthRegen: 5
+  TickInterval: 2
+  Duration: 4
   speed: 5
   jumpHeight: 2
   gravity: -9.81
   DashDuration: 0.5
   DashSpeed: 10
   DashCooldown: 2
+  canDash: 1
 --- !u!114 &713658127852056952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b35a108da32046bd79078f8b9ab6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HarleyPlayer
-  Health: 100
+  Health: 60
+  MaxHealth: 100
   Damage: 5
   MaskFlipConsentH: 0
