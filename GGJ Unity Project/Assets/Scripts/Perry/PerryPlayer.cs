@@ -12,11 +12,15 @@ public class PerryPlayer : MonoBehaviour
     
     public static PerryPlayer Instance;
 
+    public float CurrentHealth { get; private set; }
+    public float AttackDamage => Damage;
+
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
         Instance = this;
+        CurrentHealth = Health;
         
     }
     void Start()
@@ -38,5 +42,10 @@ public class PerryPlayer : MonoBehaviour
             Debug.Log("Perry has consented for a mask switch");
 
         }
+    }
+
+    public void ApplyDamage(float amount)
+    {
+        CurrentHealth = Mathf.Max(0f, CurrentHealth - amount);
     }
 }
