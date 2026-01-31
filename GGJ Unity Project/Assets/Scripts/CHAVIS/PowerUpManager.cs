@@ -1,3 +1,4 @@
+using CHAVIS;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,27 +21,27 @@ public class PowerUpManager : MonoBehaviour
     {
         Instance = this;
 
-        /*if (InGameMenus.Instance != null )
+        if (InGameMenus.Instance != null )
         {
             InGameMenus.Instance.OnStateChanged += HandleGameStateChanged;
-        }*/
+        }
     }
 
     private void OnDisable()
     {
-        /*if (InGameMenus.Instance != null)
+        if (InGameMenus.Instance != null)
         {
             InGameMenus.Instance.OnStateChanged -= HandleGameStateChanged;
-        }*/
+        }
     }
 
-    /*private void HandleGameStateChanged(InGameMenus.GameState state)
+    private void HandleGameStateChanged(InGameMenus.GameState state)
     {
         if (state == InGameMenus.GameState.PowerUpSelection)
         {
             RandomizeNewPowerUps();
         }
-    }*/
+    }
 
     public void RandomizeNewPowerUps()
     {
@@ -87,7 +88,7 @@ public class PowerUpManager : MonoBehaviour
         }
         
 
-        //InGameMenus.Instance.ChangeState(InGameMenus.GameState.Playing);
+        InGameMenus.Instance.ChangeState(InGameMenus.GameState.Playing);
     }
 
     public void ShowPUSelection()

@@ -299,4 +299,4 @@ MonoBehaviour:
   Health: 100
   Damage: 5
   MaskFlipConsentH: 0
-  PerryPlayer: {fileID: 0}
+  perryPlayer: {fileID: -1232152298516613003, guid: 2ec2582796177234f99cd1af07c3e5f9, type: 3}

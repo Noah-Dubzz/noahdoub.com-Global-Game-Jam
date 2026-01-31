@@ -287,3 +287,4 @@ MonoBehaviour:
   Health: 125
   Damage: 5
   MaskFlipConsentP: 0
+  HarleyPlayer: {fileID: 713658127852056952, guid: 8858d3fdfb7508549b3f99e583fcdfad, type: 3}
