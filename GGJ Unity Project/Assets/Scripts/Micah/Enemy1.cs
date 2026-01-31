@@ -7,6 +7,7 @@ public class Enemy1 : MonoBehaviour
 {
     public GameObject targetPlayer = null;
     public float speed = 10f;
+    public float health = 100f;
     private Rigidbody rb;
     
     private PerryDamageManager _perryManager;
@@ -59,5 +60,13 @@ public class Enemy1 : MonoBehaviour
         Debug.Log(targetPlayer.name);
     }
 
+    void takeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0f)
+        {
+            Destroy(gameObject);
+        }
+    }
     
 }
