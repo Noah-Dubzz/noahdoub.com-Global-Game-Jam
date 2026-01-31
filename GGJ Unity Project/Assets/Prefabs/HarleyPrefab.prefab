@@ -312,3 +312,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe77ed433484823b1aa7ed0b0d55415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HarleyDamageManager
+  meleeInvulnerabilityTime: 3

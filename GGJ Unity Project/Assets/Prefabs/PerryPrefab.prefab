@@ -300,3 +300,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c784f0130ed0e42aba23b74b3de3bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PerryDamageManager
+  meleeInvulnerabilityTime: 3
