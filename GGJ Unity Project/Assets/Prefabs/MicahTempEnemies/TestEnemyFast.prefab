@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4479974784722103031}
   - component: {fileID: 1836359979199337333}
   m_Layer: 0
-  m_Name: TestEnemyFast 1
+  m_Name: TestEnemyFast
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy1
   targetPlayer: {fileID: 0}
   speed: 5
+  health: 100
 --- !u!54 &4479974784722103031
 Rigidbody:
   m_ObjectHideFlags: 0

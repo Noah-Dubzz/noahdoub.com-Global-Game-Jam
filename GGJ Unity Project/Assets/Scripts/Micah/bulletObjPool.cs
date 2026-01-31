@@ -24,21 +24,18 @@ namespace Micah
             }
         }
 
-        public GameObject GetBullet()
+        public GameObject GetBullet(Vector3 position, Quaternion rotation)
         {
-            if (pool.Count > 0)
-            {
-                GameObject bullet = pool.Dequeue();
-                bullet.SetActive(true);
-                return bullet;
-            }
-            else
-            {
-                // Optional: Expand pool if empty
-                GameObject bullet = Instantiate(bulletPrefab);
-                bullet.SetActive(true);
-                return bullet;
-            }
+            GameObject bullet = pool.Dequeue();
+            
+            bullet.SetActive(false); 
+            bullet.transform.position = position;
+            bullet.transform.rotation = rotation;
+            bullet.SetActive(true);
+            
+            pool.Enqueue(bullet);
+
+            return bullet;
         }
 
         public void ReturnBullet(GameObject bullet)

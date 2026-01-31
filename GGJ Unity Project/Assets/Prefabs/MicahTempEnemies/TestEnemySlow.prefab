@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy1
   targetPlayer: {fileID: 0}
   speed: 3
+  health: 100
 --- !u!54 &5235013421507208356
 Rigidbody:
   m_ObjectHideFlags: 0
