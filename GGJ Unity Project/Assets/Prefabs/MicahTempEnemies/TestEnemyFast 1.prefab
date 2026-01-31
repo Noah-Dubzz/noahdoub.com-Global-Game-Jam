@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 991184831090293031}
   - component: {fileID: 5197610332679391411}
   - component: {fileID: 4479974784722103031}
+  - component: {fileID: 1836359979199337333}
   m_Layer: 0
   m_Name: TestEnemyFast 1
   m_TagString: Enemy
@@ -155,3 +156,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &1836359979199337333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8570971499720232868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec9284586f64b4aa9fd70e0cb92bcf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Micah.MeleeDamageScript
+  damage: 10

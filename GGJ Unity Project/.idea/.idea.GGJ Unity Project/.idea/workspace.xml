@@ -3,6 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="dd8d50fa-d24a-4f03-9016-068a71a2906d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GGJ Unity Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GGJ Unity Project/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/MicahTempEnemies/TestEnemyFast 1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/MicahTempEnemies/TestEnemyFast 1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/MicahTempEnemies/TestEnemySlow.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/MicahTempEnemies/TestEnemySlow.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Harley/HarleyDamageManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Harley/HarleyDamageManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Harley/HarleyPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Harley/HarleyPlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Micah/BulletScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Micah/BulletDamageScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Micah/BulletScript.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Micah/BulletDamageScript.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Micah/Enemy1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Micah/Enemy1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Micah/Enemy_Projectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Micah/Enemy_Projectile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Perry/PerryDamageManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Perry/PerryDamageManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Perry/PerryPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Perry/PerryPlayer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +32,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Harley/HarleyDamageManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Micah/Enemy1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Micah/Enemy_Projectile.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Micah/MeleeDamageScript.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
@@ -29,7 +40,8 @@
     "DeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider": "Unity Editor",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "Unity Attach To.Attach to.executor": "Debug",
-    "git-widget-placeholder": "Micah"
+    "git-widget-placeholder": "Micah",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RunManager">
@@ -42,4 +54,8 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
 </project>

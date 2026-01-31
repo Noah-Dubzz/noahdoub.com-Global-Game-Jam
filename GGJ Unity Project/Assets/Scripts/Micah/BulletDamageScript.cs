@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class BulletDamageScript : MonoBehaviour
 {
     private PerryDamageManager _perryDamageManager;
     private HarleyDamageManager _harleyDamageManager;

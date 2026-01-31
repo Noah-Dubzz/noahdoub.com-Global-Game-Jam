@@ -8,6 +8,18 @@ public class Enemy1 : MonoBehaviour
     public GameObject targetPlayer = null;
     public float speed = 10f;
     private Rigidbody rb;
+    
+    private PerryDamageManager _perryManager;
+    private HarleyDamageManager _harleyManager;
+    
+    private int _perryLayer;
+    private int _harleyLayer;
+
+    void Awake()
+    {
+        _perryManager = FindAnyObjectByType<PerryDamageManager>();
+        _harleyManager = FindAnyObjectByType<HarleyDamageManager>();
+    }
 
     void Start()
     {
@@ -47,12 +59,5 @@ public class Enemy1 : MonoBehaviour
         Debug.Log(targetPlayer.name);
     }
 
-    private void OnCollisionEnter(Collision other)
-    {
-        if (!other.collider.CompareTag("Player"))
-        {
-            return;
-        }
-        //MUST ADD CODE TO CALL A DAMAGE MANAGER
-    }
+    
 }

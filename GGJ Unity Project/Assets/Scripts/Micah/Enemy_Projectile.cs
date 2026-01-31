@@ -14,6 +14,7 @@ public class Enemy_Projectile : MonoBehaviour
     private float nextFireTime;
     private bool isMoving = true;
     private Rigidbody rb;
+    
     private PerryDamageManager _perryManager;
     private HarleyDamageManager _harleyManager;
 
@@ -95,7 +96,7 @@ public class Enemy_Projectile : MonoBehaviour
                 bulletRb.linearVelocity = direction * bulletSpeed;
             }
             
-            BulletScript bs = bullet.GetComponent<BulletScript>();
+            BulletDamageScript bs = bullet.GetComponent<BulletDamageScript>();
             if (bs != null)
             {
                 bs.Setup(_perryManager, _harleyManager, bulletDamage);

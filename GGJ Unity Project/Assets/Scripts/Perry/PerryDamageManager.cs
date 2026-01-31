@@ -1,28 +1,46 @@
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class PerryDamageManager : MonoBehaviour
 
 {
+
+    public float meleeInvulnerabilityTime = 1f;
     private PerryPlayer _perryPlayer = null;
-    private float invulTimer = 0f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private float _invulTimer = 0f;
+
+    private Renderer _renderer;
+    private Material _perryMat;
+
+    private Color _basicColor;
+    
     void Start()
     {
         _perryPlayer = FindAnyObjectByType<PerryPlayer>();
+        _renderer = GetComponentInChildren<Renderer>();
+        _perryMat = _renderer.material;
+        _basicColor = _perryMat.color;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (_invulTimer <= Time.time)
+        {
+            _perryMat.color = _basicColor;
+                
+        }
     }
     
     public void MeleeDamage(float damage)
     {
-        if (Time.time >= invulTimer)
+        
+        
+        if (Time.time >= _invulTimer)
         {
             _perryPlayer.Health -= damage;
-            invulTimer = Time.time + 0.5f;
+            _invulTimer = Time.time + meleeInvulnerabilityTime;
+            _perryMat.color = Color.red;
             
             Debug.Log(_perryPlayer.Health);
         }
@@ -32,6 +50,6 @@ public class PerryDamageManager : MonoBehaviour
     public void BulletDamage(float damage)
     {
         _perryPlayer.Health -= damage;
-        Debug.Log(_perryPlayer.Health);
+        //Debug.Log(_perryPlayer.Health);
     }
 }
