@@ -9,6 +9,7 @@ namespace CHAVIS
     {
         [SerializeField] private float countdown;
         [SerializeField] private List<GameObject> spawnPoints;
+        [SerializeField] private Transform spawnPointRoot;
 
 
         public PowerUpManager powerUpManager;
@@ -17,6 +18,7 @@ namespace CHAVIS
         public int currentWaveIndex = 0;
 
         private bool readyToCountDown;
+        private bool loggedMissingConfig;
 
         public float enemyInsetDefault = 1.5f;
         private void Awake()
@@ -27,17 +29,35 @@ namespace CHAVIS
         {
             readyToCountDown = true;
 
+            InitializeSpawnPoints();
+
+            if (waves == null || waves.Length == 0)
+            {
+                LogMissingConfig("No waves are assigned to WaveSpawner.");
+                return;
+            }
+
             for (int i = 0; i < waves.Length; i++)
             {
-                waves[i].enemiesLeft = waves[i].enemies.Length;
+                waves[i].enemiesLeft = waves[i].enemies != null ? waves[i].enemies.Length : 0;
+            }
+
+            if (countdown <= 0f)
+            {
+                countdown = waves[currentWaveIndex].timeToNextWave;
             }
         }
         private void Update()
         {
+            if (waves == null || waves.Length == 0)
+            {
+                LogMissingConfig("No waves are assigned to WaveSpawner.");
+                return;
+            }
+
             if (currentWaveIndex >= waves.Length)
             {
                 //Debug.Log("You survived every wave!");
-                SceneManager.LoadScene("Win");
                 return;
             }
 
@@ -52,7 +72,14 @@ namespace CHAVIS
 
                 countdown = waves[currentWaveIndex].timeToNextWave;
 
-                StartCoroutine(SpawnWave());
+                if (spawnPoints != null && spawnPoints.Count > 0 && waves[currentWaveIndex].enemiesLeft > 0)
+                {
+                    StartCoroutine(SpawnWave());
+                }
+                else if (spawnPoints == null || spawnPoints.Count == 0)
+                {
+                    LogMissingConfig("No spawn points are assigned to WaveSpawner.");
+                }
             }
 
             if (waves[currentWaveIndex].enemiesLeft <= 0)
@@ -65,13 +92,30 @@ namespace CHAVIS
         }
         private IEnumerator SpawnWave()
         {
+            if (spawnPoints == null || spawnPoints.Count == 0)
+            {
+                yield break;
+            }
+
             int x = spawnPoints.Count;
             if (currentWaveIndex < waves.Length)
             {
-                for (int i = 0; i < waves[currentWaveIndex].enemies.Length; i++)
+                var enemies = waves[currentWaveIndex].enemies;
+                if (enemies == null || enemies.Length == 0)
+                {
+                    LogMissingConfig("Wave has no enemies assigned.");
+                    yield break;
+                }
+
+                for (int i = 0; i < enemies.Length; i++)
                 {
                     GameObject spawnPoint = spawnPoints[Random.Range(0, x)];
-                    GameObject enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoint.transform);
+                    if (spawnPoint == null || enemies[i] == null)
+                    {
+                        continue;
+                    }
+
+                    GameObject enemy = Instantiate(enemies[i], spawnPoint.transform);
 
                     enemy.transform.SetParent(spawnPoint.transform);
 
@@ -83,9 +127,53 @@ namespace CHAVIS
         {
 
             Time.timeScale = 0f;
-            powerUpManager.RandomizeNewPowerUps();
-            InGameMenus.Instance.ChangeState(InGameMenus.GameState.PowerUpSelection);
+            if (powerUpManager != null)
+            {
+                powerUpManager.RandomizeNewPowerUps();
+            }
+            if (InGameMenus.Instance != null)
+            {
+                InGameMenus.Instance.ChangeState(InGameMenus.GameState.PowerUpSelection);
+            }
 
+        }
+
+        private void InitializeSpawnPoints()
+        {
+            if (spawnPoints == null)
+            {
+                spawnPoints = new List<GameObject>();
+            }
+
+            spawnPoints.RemoveAll(point => point == null);
+
+            if (spawnPoints.Count > 0)
+            {
+                return;
+            }
+
+            Transform root = spawnPointRoot != null ? spawnPointRoot : transform;
+            Transform[] children = root.GetComponentsInChildren<Transform>(true);
+            for (int i = 0; i < children.Length; i++)
+            {
+                if (children[i] != root)
+                {
+                    spawnPoints.Add(children[i].gameObject);
+                }
+            }
+
+            spawnPoints.RemoveAll(point => point == null);
+        }
+
+        private void LogMissingConfig(string message)
+        {
+            if (loggedMissingConfig)
+            {
+                return;
+            }
+
+            loggedMissingConfig = true;
+            Debug.LogWarning(message, this);
         }
 
     }
