@@ -664,6 +664,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaskManager
   harleyPlayer: {fileID: 713658127852056952, guid: 8858d3fdfb7508549b3f99e583fcdfad, type: 3}
   perryPlayer: {fileID: -1232152298516613003, guid: 2ec2582796177234f99cd1af07c3e5f9, type: 3}
+  Hsupp: 1
+  HDam: 0
+  Psupp: 0
+  Pdam: 1
+  canflip: 0
 --- !u!4 &1464941914
 Transform:
   m_ObjectHideFlags: 0

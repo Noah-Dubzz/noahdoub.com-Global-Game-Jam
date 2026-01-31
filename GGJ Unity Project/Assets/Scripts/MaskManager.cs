@@ -7,17 +7,21 @@ public class MaskManager : MonoBehaviour
     [SerializeField]public PerryPlayer perryPlayer;
     public static MaskManager Instance;
 
-    private bool Hsupp = true;
-    private bool HDam = false;
-    private bool Psupp = false;
-    private bool Pdam = true;
-    private bool canflip = false;
+    public bool Hsupp = true;
+    public bool HDam = false;
+    public bool Psupp = false;
+    public bool Pdam = true;
+    public bool canflip = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Awake()
+    {
+       Instance = this;
+    }
     void Start()
     {
        
-        MaskManager.Instance = this;
+        
         HarleySupport();
         PerryDamage();
     }
@@ -70,11 +74,14 @@ public class MaskManager : MonoBehaviour
     public void HarleySupport()
     {
         Debug.Log("Harley is in support Mode");
+
     }
 
     public void HarleyDamage()
     {
         Debug.Log("Harley is in Damage Mode");
+
+
     }
 
     public void PerrySupport()

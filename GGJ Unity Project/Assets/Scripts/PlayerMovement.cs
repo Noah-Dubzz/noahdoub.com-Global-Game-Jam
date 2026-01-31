@@ -3,28 +3,34 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] HarleyPlayer Harley;
+    [SerializeField] PerryPlayer Perry;
+
+    [SerializeField] private float HealthRegen = 5f;
+    [SerializeField] private float TickInterval = 5f;
+    [SerializeField] private float Duration = 5f;
+
     [Header("Jumping & overall speed")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float gravity = -9.81f;
 
+   
+
+
+
+
+
     [Header("Dashing")]
-    [SerializeField] private float dashSpeed;
+    [SerializeField] private float DashDuration = 2f;
+    [SerializeField] private float DashSpeed = 10f;
+    [SerializeField] private float DashCooldown = 2f;
+    public bool canDash = true;
     private bool isDashing;
-
-
-
-
-
-    [Header("Rolling")]
-    [SerializeField] private float rollDuration = 2f;
-    [SerializeField] private float rollSpeed = 10f;
-    [SerializeField] private float rollCooldown = 2f;
-    private bool canRoll = true;
-    private bool isRolling;
 
 
 
@@ -35,13 +41,16 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 dashDirection;
     private Vector3 rollDirection;
 
+
+    
     //public Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         controller = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
+        
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -62,31 +71,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    
+
+
     public void Dash(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            speed *= dashSpeed;
-            isDashing = true;
-        }
-
-        if (!context.performed)
-        {
-            speed = 5f;
-            isDashing = false;
-        }
-
-
-    }
-
-
-    public void Roll(InputAction.CallbackContext context)
-    {
-        if (context.performed && controller.isGrounded && canRoll)
+        if (context.performed && canDash && MaskManager.Instance.HDam)
         {
             Debug.Log(" The player is Rolling ");
             StartCoroutine(RollRoutine());
 
+        }
+        if (context.performed && canDash && MaskManager.Instance.Hsupp)
+        {
+            Heal();
         }
 
     }
@@ -94,19 +92,16 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
         controller.Move(move * speed * Time.deltaTime);
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        if (!isDashing)
+       
+        if (isDashing)
         {
-            speed = 5;
-
-        }
-        if (isRolling)
-        {
-            controller.Move(rollDirection * rollSpeed * Time.deltaTime);
+            controller.Move(rollDirection * DashSpeed * Time.deltaTime);
             return;
         }
 
@@ -115,8 +110,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator RollRoutine()
     {
-        canRoll = false;
-        isRolling = true;
+        canDash = false;
+        isDashing = true;
 
         //animator.SetTrigger("Roll");
         //  the current movement direction at the start of the roll
@@ -126,12 +121,94 @@ public class PlayerMovement : MonoBehaviour
             rollDirection = transform.forward;
         }
         // the duration of the roll
-        yield return new WaitForSeconds(rollDuration);
+        yield return new WaitForSeconds(DashDuration);
 
-        isRolling = false;
+        isDashing = false;
 
         // Start cooldown
-        yield return new WaitForSeconds(rollCooldown);
-        canRoll = true;
+        yield return new WaitForSeconds(DashCooldown);
+        canDash = true;
     }
+
+    public void Heal()
+    {
+        Debug.Log("Heal Started");
+        if (HarleyPlayer.Instance.Health < Harley.MaxHealth - (Harley.MaxHealth * 0.25f) || Perry.Health < Perry.MaxHealth - (Perry.MaxHealth * 0.25f) )
+        {
+            Debug.Log("Harley: " + HarleyPlayer.Instance.Health);
+            HarleyPlayer.Instance.Health += (HarleyPlayer.Instance.MaxHealth * 0.25f);
+            Debug.Log("Harley: " + HarleyPlayer.Instance.Health);
+            Debug.Log("Perry : " + PerryPlayer.Instance.Health);
+            PerryPlayer.Instance.Health += Mathf.Round((PerryPlayer.Instance.MaxHealth * 0.25f));
+            Debug.Log("Perry : " + PerryPlayer.Instance.Health);
+            StartCoroutine(HealthTickH());
+            
+        }
+
+        if (Perry.Health >= Perry.MaxHealth)
+        {
+            
+            Perry.Health = Perry.MaxHealth;
+        }
+        if (Harley.Health >= Harley.MaxHealth)
+        {
+            Harley.Health = Harley.MaxHealth;
+        }
+
+    }
+    private IEnumerator HealthTickH()
+    {
+        int ticks = 0;
+        while ( Duration * Time.deltaTime> 0)
+        {
+            if (ticks < 7 && Harley.Health < Harley.MaxHealth)
+            {
+                
+                Harley.Health += HealthRegen;
+                yield return new WaitForSeconds(TickInterval);
+                ticks++;
+                
+                
+            }
+            else if (HarleyPlayer.Instance.Health > HarleyPlayer.Instance.MaxHealth)
+            {
+                HarleyPlayer.Instance.Health = HarleyPlayer.Instance.MaxHealth;
+                Debug.Log("break at - Harley: + " + HarleyPlayer.Instance.Health);
+                break;
+            }
+            else
+            {
+                break;
+            }
+
+        }
+        ticks = 0;
+        while (Duration * Time.deltaTime > 0)
+        {
+            if (ticks < 7 && PerryPlayer.Instance.Health < PerryPlayer.Instance.MaxHealth)
+            {
+                PerryPlayer.Instance.Health += HealthRegen;
+                yield return new WaitForSeconds(TickInterval);
+                Debug.Log("perry: + " + PerryPlayer.Instance.Health);
+                ticks++;
+
+
+            }
+            else if (PerryPlayer.Instance.Health > PerryPlayer.Instance.MaxHealth)
+            {
+                PerryPlayer.Instance.Health = PerryPlayer.Instance.MaxHealth;
+                Debug.Log("break at - perry: + " + PerryPlayer.Instance.Health);
+                break;
+            }
+            else 
+            {
+                break;
+            }
+
+        }
+        yield return new WaitForSeconds(TickInterval);
+        canDash = true;
+
+    }
+  
 }

@@ -229,19 +229,7 @@ MonoBehaviour:
     m_ActionId: 3c05e67f-b897-4d0a-a6f1-3c9dbafa1c96
     m_ActionName: 'Gameplay/Dash[/Keyboard/shift]'
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3460974249289048023}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: Roll
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 26c18713-7d38-4f8c-9a83-ced58c845c58
     m_ActionName: 'Gameplay/Roll[/Keyboard/backspace]'
   - m_PersistentCalls:
@@ -277,13 +265,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b78840219763966468560282b9a1ecd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  Harley: {fileID: 713658127852056952}
+  Perry: {fileID: -1232152298516613003, guid: 2ec2582796177234f99cd1af07c3e5f9, type: 3}
+  HealthRegen: 5
+  TickInterval: 2
+  Duration: 4
   speed: 5
   jumpHeight: 2
   gravity: -9.81
-  dashSpeed: 3
-  rollDuration: 0.3
-  rollSpeed: 10
-  rollCooldown: 2
+  DashDuration: 0.5
+  DashSpeed: 10
+  DashCooldown: 2
+  canDash: 1
 --- !u!114 &713658127852056952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025b35a108da32046bd79078f8b9ab6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HarleyPlayer
-  Health: 100
+  Health: 60
+  MaxHealth: 100
   Damage: 5
   MaskFlipConsentH: 0
-  perryPlayer: {fileID: -1232152298516613003, guid: 2ec2582796177234f99cd1af07c3e5f9, type: 3}
