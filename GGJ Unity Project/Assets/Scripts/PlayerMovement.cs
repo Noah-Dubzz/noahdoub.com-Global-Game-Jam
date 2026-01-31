@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,20 +12,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float gravity = -9.81f;
 
+   
+
+
+
+
+
     [Header("Dashing")]
-    [SerializeField] private float dashSpeed;
+    [SerializeField] private float DashDuration = 2f;
+    [SerializeField] private float DashSpeed = 10f;
+    [SerializeField] private float DashCooldown = 2f;
+    private bool canDash = true;
     private bool isDashing;
-
-
-
-
-
-    [Header("Rolling")]
-    [SerializeField] private float rollDuration = 2f;
-    [SerializeField] private float rollSpeed = 10f;
-    [SerializeField] private float rollCooldown = 2f;
-    private bool canRoll = true;
-    private bool isRolling;
 
 
 
@@ -35,13 +34,16 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 dashDirection;
     private Vector3 rollDirection;
 
+
+    
     //public Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         controller = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
+        
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -62,27 +64,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    
+
+
     public void Dash(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            speed *= dashSpeed;
-            isDashing = true;
-        }
-
-        if (!context.performed)
-        {
-            speed = 5f;
-            isDashing = false;
-        }
-
-
-    }
-
-
-    public void Roll(InputAction.CallbackContext context)
-    {
-        if (context.performed && controller.isGrounded && canRoll)
+        if (context.performed && canDash && MaskManager.Instance.HDam)
         {
             Debug.Log(" The player is Rolling ");
             StartCoroutine(RollRoutine());
@@ -94,19 +81,16 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
         controller.Move(move * speed * Time.deltaTime);
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        if (!isDashing)
+       
+        if (isDashing)
         {
-            speed = 5;
-
-        }
-        if (isRolling)
-        {
-            controller.Move(rollDirection * rollSpeed * Time.deltaTime);
+            controller.Move(rollDirection * DashSpeed * Time.deltaTime);
             return;
         }
 
@@ -115,8 +99,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator RollRoutine()
     {
-        canRoll = false;
-        isRolling = true;
+        canDash = false;
+        isDashing = true;
 
         //animator.SetTrigger("Roll");
         //  the current movement direction at the start of the roll
@@ -126,12 +110,12 @@ public class PlayerMovement : MonoBehaviour
             rollDirection = transform.forward;
         }
         // the duration of the roll
-        yield return new WaitForSeconds(rollDuration);
+        yield return new WaitForSeconds(DashDuration);
 
-        isRolling = false;
+        isDashing = false;
 
         // Start cooldown
-        yield return new WaitForSeconds(rollCooldown);
-        canRoll = true;
+        yield return new WaitForSeconds(DashCooldown);
+        canDash = true;
     }
 }
