@@ -62,12 +62,12 @@ public class HarleyPlayer : MonoBehaviour
     }
     private void SupportMode()
     {
-        Debug.Log($"<collor=pink> Harley is in support Mode</color>");
+        //Debug.Log($"<collor=pink> Harley is in support Mode</color>");
 
     }
 
     private void DamageMode()
     {
-        Debug.Log($"<collor=purple> Harley is in Damage Mode</color>");
+        //Debug.Log($"<collor=purple> Harley is in Damage Mode</color>");
     }
 }

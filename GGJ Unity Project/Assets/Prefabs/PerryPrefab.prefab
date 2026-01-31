@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -1232152298516613003}
   m_Layer: 0
   m_Name: PerryPrefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -245,19 +245,7 @@ MonoBehaviour:
     m_ActionId: 26c18713-7d38-4f8c-9a83-ced58c845c58
     m_ActionName: 'Gameplay/Roll[/Keyboard/backspace]'
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -1232152298516613003}
-        m_TargetAssemblyTypeName: PerryPlayer, Assembly-CSharp
-        m_MethodName: MaskFlip
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 39b41301-ac60-4b59-ae36-26046035fc9a
     m_ActionName: Gameplay/MaskFlip
   m_NeverAutoSwitchControlSchemes: 0

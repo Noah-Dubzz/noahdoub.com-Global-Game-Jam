@@ -56,12 +56,12 @@ public class PerryPlayer : MonoBehaviour
     }
     private void SupportMode()
     {
-        Debug.Log($"<collor=green> Perry is in support Mode</color>");
+        //Debug.Log($"<collor=green> Perry is in support Mode</color>");
 
     }
 
     private void DamageMode()
     {
-        Debug.Log($"<collor=blue> perry is in Damage Mode</color>");
+        //Debug.Log($"<collor=blue> perry is in Damage Mode</color>");
     }
 }
