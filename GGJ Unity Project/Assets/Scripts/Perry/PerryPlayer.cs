@@ -9,10 +9,14 @@ public class PerryPlayer : MonoBehaviour
     [SerializeField] public float MaxHealth = 125;
    
     public bool MaskFlipConsentP = false;
-    
-    public static PerryPlayer Instance;
 
-    
+    public static PerryPlayer Instance;
+    [SerializeField] private MeshRenderer Paura;
+
+    [SerializeField] private Material Supp;
+    [SerializeField] private Material Dammage;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -28,7 +32,14 @@ public class PerryPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (MaskManager.Instance.Pdam)
+        {
+            Paura.material = Dammage;
+        }
+        if (MaskManager.Instance.Psupp)
+        {
+            Paura.material = Supp;
+        }
     }
 
     public void MaskFlip(InputAction.CallbackContext context)

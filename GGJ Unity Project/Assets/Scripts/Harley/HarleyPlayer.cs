@@ -10,8 +10,12 @@ public class HarleyPlayer : MonoBehaviour
     [SerializeField] private float Damage = 5f;
 
     public static HarleyPlayer Instance;
-    
-    
+    [SerializeField] private MeshRenderer Haura;
+
+
+    [SerializeField] private Material Supp;
+    [SerializeField] private Material Dammage;
+
 
     public bool MaskFlipConsentH = false;
     
@@ -33,7 +37,16 @@ public class HarleyPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (MaskManager.Instance.HDam)
+        {
+            Haura.material = Dammage;
+
+        }
+        if (MaskManager.Instance.Hsupp)
+        {
+            Haura.material = Supp;
+
+        }
     }
 
     public void MaskFlip(InputAction.CallbackContext context)

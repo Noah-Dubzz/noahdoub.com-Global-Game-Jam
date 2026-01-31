@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,6 +10,11 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] HarleyPlayer Harley;
     [SerializeField] PerryPlayer Perry;
+    
+
+    [SerializeField] private GameObject sharp;
+    [SerializeField] private GameObject faceAttack;
+    [SerializeField] private GameObject faceMove;
 
     [SerializeField] private float HealthRegen = 5f;
     [SerializeField] private float TickInterval = 5f;
@@ -32,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canDash = true;
     private bool isDashing;
 
-
+    
 
     private CharacterController controller;
     private Rigidbody rb;
@@ -40,9 +46,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private Vector3 dashDirection;
     private Vector3 rollDirection;
+    private Vector2 AimInput;
 
 
-    
+
+
     //public Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -50,13 +58,21 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
-        
+
+        sharp.GetComponent<Collider>();
+        this.enabled = true;
+         
+
+
     }
+
+  
 
     public void Move(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
         Debug.Log($"Move Input: {moveInput}");
+
 
     }
 
@@ -88,15 +104,36 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+           faceAttack.SetActive(true);
+        }
+        if(context.canceled)
+        {
+            faceAttack.SetActive(false);
+        }
 
-    // Update is called once per frame
-    void Update()
+    }
+   public void Aiming(InputAction.CallbackContext context)
+    {
+        AimInput = context.ReadValue<Vector2>();
+    }
+        
+        // Update is called once per frame
+        void Update()
     {
         
+        this.enabled = true;
+
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
         controller.Move(move * speed * Time.deltaTime);
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        Vector3 Aimings = new ( AimInput.x  ,0, AimInput.y);
+        faceMove.transform.position = Aimings += transform.position;
 
        
         if (isDashing)
@@ -104,10 +141,20 @@ public class PlayerMovement : MonoBehaviour
             controller.Move(rollDirection * DashSpeed * Time.deltaTime);
             return;
         }
-
+        
+        
+        
     }
 
+    private void  onTriggerEnter (Collider other)
+    {
+        if(other.gameObject.CompareTag("Enemy"))
+        {
+            //deal damage
 
+            Debug.Log("enemy detected");
+        }
+    }
     private IEnumerator RollRoutine()
     {
         canDash = false;
@@ -119,9 +166,22 @@ public class PlayerMovement : MonoBehaviour
         if (rollDirection == Vector3.zero)
         {
             rollDirection = transform.forward;
+            
+            
+            
+        }
+        sharp.SetActive(true);
+        if (sharp.activeSelf)
+        {
+            Debug.Log("sharp collider is on");
         }
         // the duration of the roll
         yield return new WaitForSeconds(DashDuration);
+        sharp.SetActive(false);
+        if(sharp.activeSelf == false)
+        {
+            Debug.Log("sharp collider is off");
+        }
 
         isDashing = false;
 

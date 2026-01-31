@@ -6,7 +6,7 @@ public class MaskManager : MonoBehaviour
     [SerializeField]public HarleyPlayer harleyPlayer;
     [SerializeField]public PerryPlayer perryPlayer;
     public static MaskManager Instance;
-
+    
     public bool Hsupp = true;
     public bool HDam = false;
     public bool Psupp = false;
@@ -17,6 +17,7 @@ public class MaskManager : MonoBehaviour
     private void Awake()
     {
        Instance = this;
+        
     }
     void Start()
     {
@@ -31,6 +32,8 @@ public class MaskManager : MonoBehaviour
     {
         harleyPlayer = FindAnyObjectByType<HarleyPlayer>();
         perryPlayer = FindAnyObjectByType<PerryPlayer>();
+
+        
         MaskFlipper();
     }
 
@@ -74,23 +77,26 @@ public class MaskManager : MonoBehaviour
     public void HarleySupport()
     {
         Debug.Log("Harley is in support Mode");
+        
 
     }
 
     public void HarleyDamage()
     {
         Debug.Log("Harley is in Damage Mode");
-
+        
 
     }
 
     public void PerrySupport()
     {
         Debug.Log("perry is in support Mode");
+        
     }
     public void PerryDamage()
     {
         Debug.Log("Perry is in damage mode");
+        
     }
 
     
