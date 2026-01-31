@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInputManager
-  m_NotificationBehavior: 2
+  m_NotificationBehavior: 0
   m_MaxPlayerCount: 2
   m_AllowJoining: 1
   m_JoinBehavior: 2
@@ -184,7 +184,7 @@ MonoBehaviour:
       m_Flags: 1
     m_Reference: {fileID: 0}
   m_PlayerPrefab: {fileID: 8816060740330628025, guid: 8858d3fdfb7508549b3f99e583fcdfad, type: 3}
-  m_SplitScreen: 1
+  m_SplitScreen: 0
   m_MaintainAspectRatioInSplitScreen: 0
   m_FixedNumberOfSplitScreens: -1
   m_SplitScreenRect:
@@ -220,7 +220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d0526f8700c88d4f89931e725c36f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputManager
-  playerprefab: {fileID: 8816060740330628025, guid: 8858d3fdfb7508549b3f99e583fcdfad, type: 3}
+  Harleyprefab: {fileID: 8816060740330628025, guid: 8858d3fdfb7508549b3f99e583fcdfad, type: 3}
+  Perryprefab: {fileID: 8816060740330628025, guid: 2ec2582796177234f99cd1af07c3e5f9, type: 3}
   spawnpoints:
   - {fileID: 753072632}
   - {fileID: 205367719}
