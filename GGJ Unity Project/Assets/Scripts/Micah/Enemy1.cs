@@ -8,7 +8,7 @@ public class Enemy1 : MonoBehaviour
     public GameObject targetPlayer = null;
     public float speed = 10f;
     public float health = 100f;
-    private Rigidbody rb;
+    private Rigidbody _rb;
     
     private PerryDamageManager _perryManager;
     private HarleyDamageManager _harleyManager;
@@ -24,7 +24,7 @@ public class Enemy1 : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
         FindTargetPlayer();
     }
 
@@ -35,7 +35,7 @@ public class Enemy1 : MonoBehaviour
             Vector3 direction = targetPlayer.transform.position - transform.position;
             direction.y = 0;
             Vector3 moveVelocity = direction.normalized * speed;
-            rb.linearVelocity = new Vector3(moveVelocity.x, 0, moveVelocity.z);
+            _rb.linearVelocity = new Vector3(moveVelocity.x, 0, moveVelocity.z);
         }
     }
 

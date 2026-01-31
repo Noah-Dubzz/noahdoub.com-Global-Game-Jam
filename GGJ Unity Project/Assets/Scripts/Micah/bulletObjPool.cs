@@ -10,7 +10,7 @@ namespace Micah
 
         public GameObject bulletPrefab;
         public int poolSize = 20;
-        private Queue<GameObject> pool = new Queue<GameObject>();
+        private Queue<GameObject> _pool = new Queue<GameObject>();
 
         void Awake()
         {
@@ -20,20 +20,20 @@ namespace Micah
             {
                 GameObject bullet = Instantiate(bulletPrefab);
                 bullet.SetActive(false);
-                pool.Enqueue(bullet);
+                _pool.Enqueue(bullet);
             }
         }
 
         public GameObject GetBullet(Vector3 position, Quaternion rotation)
         {
-            GameObject bullet = pool.Dequeue();
+            GameObject bullet = _pool.Dequeue();
             
             bullet.SetActive(false); 
             bullet.transform.position = position;
             bullet.transform.rotation = rotation;
             bullet.SetActive(true);
             
-            pool.Enqueue(bullet);
+            _pool.Enqueue(bullet);
 
             return bullet;
         }
@@ -41,7 +41,7 @@ namespace Micah
         public void ReturnBullet(GameObject bullet)
         {
             bullet.SetActive(false);
-            pool.Enqueue(bullet);
+            _pool.Enqueue(bullet);
         }
     }
 }
