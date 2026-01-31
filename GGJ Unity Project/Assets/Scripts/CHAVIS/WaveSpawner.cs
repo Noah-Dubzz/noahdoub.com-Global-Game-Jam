@@ -19,10 +19,9 @@ public class WaveSpawner : MonoBehaviour
     private bool readyToCountDown;
 
     public float enemyInsetDefault = 1.5f;
-    private BoundsChecks bndCheck;
     private void Awake()
     {
-        bndCheck = GetComponent<BoundsChecks>();
+
     }
     private void Start()
     {
@@ -85,7 +84,7 @@ public class WaveSpawner : MonoBehaviour
         
         Time.timeScale = 0f;
         powerUpManager.RandomizeNewPowerUps();
-        InGameMenus.Instance.ChangeState(InGameMenus.GameState.PowerUpSelection);
+        //InGameMenus.Instance.ChangeState(InGameMenus.GameState.PowerUpSelection);
         
     }
     
