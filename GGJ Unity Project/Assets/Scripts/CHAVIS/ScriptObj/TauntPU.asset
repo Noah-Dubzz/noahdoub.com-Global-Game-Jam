@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d34441bc70e9e24baaa3dcb8281ce0b, type: 3}
   m_Name: TauntPU
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpsSO
-  effectType: 1
-  effectValue: 0
+  powerUpEffect: 1
+  effectValue1: 0
+  effectValue2: 0
   isUnique: 0

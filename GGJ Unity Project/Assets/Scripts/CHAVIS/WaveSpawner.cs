@@ -1,110 +1,93 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CHAVIS
 {
     public class WaveSpawner : MonoBehaviour
     {
-        [SerializeField] private float countdown = 5f;
-        [SerializeField] private List<GameObject> spawnPoints = new List<GameObject>();
-        [SerializeField] private int extraEnemiesPerWave = 1; // how many extra enemies each subsequent wave gets
+        [SerializeField] private float countdown;
+        [SerializeField] private List<GameObject> spawnPoints;
+
 
         public PowerUpManager powerUpManager;
-        public Wave[] waves;
 
-        // Wave counter (starts at 1). Allows infinite progression by cycling templates.
-        public int currentWaveNumber = 1;
+        public Wave[] waves;
+        public int currentWaveIndex = 0;
 
         private bool readyToCountDown;
-        public float enemyInsetDefault = 1.5f;
 
+        public float enemyInsetDefault = 1.5f;
+        private void Awake()
+        {
+            
+        }
         private void Start()
         {
             readyToCountDown = true;
 
-            if (waves != null && waves.Length > 0)
+            for (int i = 0; i < waves.Length; i++)
             {
-                // ensure templates have a sensible initial enemiesLeft (not used for spawn count directly)
-                for (int i = 0; i < waves.Length; i++)
-                {
-                    waves[i].enemiesLeft = waves[i].enemies != null ? waves[i].enemies.Length : 0;
-                }
-
-                // if countdown hasn't been configured in inspector, use first wave's time
-                if (countdown <= 0f)
-                    countdown = waves[0].timeToNextWave;
-            }
-            else
-            {
-                Debug.LogWarning("WaveSpawner: No waves defined.");
+                waves[i].enemiesLeft = waves[i].enemies.Length;
             }
         }
-
         private void Update()
         {
-            if (waves == null || waves.Length == 0) return;
-
-            if (readyToCountDown)
-                countdown -= Time.deltaTime;
-
-            if (countdown <= 0f && !readyToCountDown)
+            if (currentWaveIndex >= waves.Length)
             {
-                // start spawning the current wave
+                //Debug.Log("You survived every wave!");
+                SceneManager.LoadScene("Win");
+                return;
+            }
+
+            if (readyToCountDown == true)
+            {
+                countdown -= Time.deltaTime;
+            }
+
+            if (countdown <= 0)
+            {
                 readyToCountDown = false;
-                var template = waves[(currentWaveNumber - 1) % waves.Length];
-                countdown = template.timeToNextWave;
+
+                countdown = waves[currentWaveIndex].timeToNextWave;
+
                 StartCoroutine(SpawnWave());
             }
 
-            // If current template's enemiesLeft reaches zero, end the wave and prepare next (infinite allowed)
-            var currentTemplate = waves[(currentWaveNumber - 1) % waves.Length];
-            if (currentTemplate.enemiesLeft <= 0)
+            if (waves[currentWaveIndex].enemiesLeft <= 0)
             {
                 WaveEnd();
                 readyToCountDown = true;
-                currentWaveNumber++;
+
+                currentWaveIndex += 1;
             }
         }
-
         private IEnumerator SpawnWave()
         {
-            var template = waves[(currentWaveNumber - 1) % waves.Length];
-            if (template.enemies == null || template.enemies.Length == 0)
+            int x = spawnPoints.Count;
+            if (currentWaveIndex < waves.Length)
             {
-                Debug.LogWarning("WaveSpawner: Wave template has no enemy prefabs.");
-                yield break;
-            }
+                for (int i = 0; i < waves[currentWaveIndex].enemies.Length; i++)
+                {
+                    GameObject spawnPoint = spawnPoints[Random.Range(0, x)];
+                    GameObject enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoint.transform);
 
-            int baseCount = template.enemies.Length;
-            int spawnCount = baseCount + (currentWaveNumber - 1) * extraEnemiesPerWave;
-            template.enemiesLeft = spawnCount; // set how many enemies this wave expects
+                    enemy.transform.SetParent(spawnPoint.transform);
 
-            int spCount = spawnPoints != null ? spawnPoints.Count : 0;
-            if (spCount == 0)
-            {
-                Debug.LogWarning("WaveSpawner: No spawn points assigned.");
-                yield break;
-            }
-
-            for (int i = 0; i < spawnCount; i++)
-            {
-                var spawnPoint = spawnPoints[Random.Range(0, spCount)];
-                var enemyPrefab = template.enemies[Random.Range(0, template.enemies.Length)];
-                // Instantiate at spawn point world position; set parent for organization
-                var enemy = Instantiate(enemyPrefab, spawnPoint.transform.position, Quaternion.identity);
-                enemy.transform.SetParent(spawnPoint.transform);
-
-                yield return new WaitForSeconds(template.timeToNextEnemy);
+                    yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
+                }
             }
         }
-
         public void WaveEnd()
         {
+
             Time.timeScale = 0f;
-            powerUpManager?.RandomizeNewPowerUps();
+            powerUpManager.RandomizeNewPowerUps();
             InGameMenus.Instance.ChangeState(InGameMenus.GameState.PowerUpSelection);
+
         }
+
     }
 
     [System.Serializable]
