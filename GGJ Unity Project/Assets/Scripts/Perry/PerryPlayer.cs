@@ -4,9 +4,9 @@ using UnityEngine.InputSystem;
 
 public class PerryPlayer : MonoBehaviour
 {
-    public float Health;
+    [SerializeField] public float Health = 125;
     [SerializeField] private float Damage = 5f;
-    [SerializeField] public float MaxHealth = 125;
+
    
     public bool MaskFlipConsentP = false;
     
@@ -17,7 +17,6 @@ public class PerryPlayer : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Health = 10;
         
     }
     void Start()
@@ -28,7 +27,10 @@ public class PerryPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        /*if (Health <= 0)
+        {
+            Debug.Log("PERRY DOWN");
+        }*/
     }
 
     public void MaskFlip(InputAction.CallbackContext context)

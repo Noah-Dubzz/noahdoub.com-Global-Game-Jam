@@ -1,17 +1,14 @@
-using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class HarleyPlayer : MonoBehaviour
 {
-    [SerializeField] public float Health;
-    [SerializeField] public float MaxHealth = 100f;
+    [SerializeField] public float Health = 100f;
     [SerializeField] private float Damage = 5f;
-
     public static HarleyPlayer Instance;
-    
-    
+
+  
 
     public bool MaskFlipConsentH = false;
     
@@ -19,21 +16,21 @@ public class HarleyPlayer : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        //Health = MaxHealth;
-        Health = 25;
-
         
     }
     void Start()
     {
-       
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        /*if (Health <= 0)
+        {
+            Debug.Log("HARLEY DOWN");
+        }*/
     }
 
     public void MaskFlip(InputAction.CallbackContext context)
@@ -47,5 +44,5 @@ public class HarleyPlayer : MonoBehaviour
         }
     }
 
-    
+   
 }
