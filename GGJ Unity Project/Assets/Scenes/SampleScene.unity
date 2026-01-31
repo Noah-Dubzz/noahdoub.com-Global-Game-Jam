@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInputManager
   m_NotificationBehavior: 2
   m_MaxPlayerCount: 2
-  m_AllowJoining: 0
+  m_AllowJoining: 1
   m_JoinBehavior: 2
   m_PlayerJoinedEvent:
     m_PersistentCalls:
@@ -221,7 +221,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputManager
   playerprefab: {fileID: 8816060740330628025, guid: 8858d3fdfb7508549b3f99e583fcdfad, type: 3}
-  spawnpoints: []
+  spawnpoints:
+  - {fileID: 753072632}
+  - {fileID: 205367719}
 --- !u!1 &205367718
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,13 +341,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.2912396, y: -0, z: -0, w: 0.9566502}
+  m_LocalPosition: {x: 0, y: 10, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 33.864, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0

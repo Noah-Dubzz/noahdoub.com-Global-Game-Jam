@@ -1,12 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInputManager : MonoBehaviour
 {
+    private HashSet<Gamepad> joinedGamepads = new HashSet<Gamepad>();
     [SerializeField] private GameObject playerprefab;
     [SerializeField] private Transform[] spawnpoints;
     private bool wasdjoined = false;
-    private bool arrowsJoined = false;
+
+    private bool gamepadJoined = false;
+    
 
     
 
@@ -23,12 +27,14 @@ public class PlayerInputManager : MonoBehaviour
             {
                 player.transform.position = spawnpoints[0].position;
             }
+            wasdjoined = true;
         }
         foreach(var gamePad in Gamepad.all)
         {
-            if(gamePad.buttonSouth.wasPressedThisFrame)
+            if(gamePad.buttonSouth.wasPressedThisFrame && !joinedGamepads.Contains(gamePad))
             {
                 PlayerInput.Instantiate(playerprefab, controlScheme: "GamePad", pairWithDevice:  gamePad);
+                joinedGamepads.Add(gamePad);
             }
         }
 
