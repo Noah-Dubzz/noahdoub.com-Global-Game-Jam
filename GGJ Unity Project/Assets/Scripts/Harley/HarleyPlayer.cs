@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class HarleyPlayer : MonoBehaviour
 {
+    [SerializeField] public float MaxHealth = 100f;
     [SerializeField] public float Health = 100f;
     [SerializeField] private float Damage = 5f;
     public static HarleyPlayer Instance;
@@ -31,6 +32,11 @@ public class HarleyPlayer : MonoBehaviour
         {
             Debug.Log("HARLEY DOWN");
         }*/
+    }
+
+    public float GetDamage()
+    {
+        return Damage;
     }
 
     public void MaskFlip(InputAction.CallbackContext context)

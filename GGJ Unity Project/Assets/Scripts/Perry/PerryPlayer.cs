@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PerryPlayer : MonoBehaviour
 {
+    [SerializeField] public float MaxHealth = 125;
     [SerializeField] public float Health = 125;
     [SerializeField] private float Damage = 5f;
 
@@ -31,6 +32,11 @@ public class PerryPlayer : MonoBehaviour
         {
             Debug.Log("PERRY DOWN");
         }*/
+    }
+
+    public float GetDamage()
+    {
+        return Damage;
     }
 
     public void MaskFlip(InputAction.CallbackContext context)
