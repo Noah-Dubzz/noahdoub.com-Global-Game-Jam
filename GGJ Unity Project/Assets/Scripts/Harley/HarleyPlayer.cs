@@ -1,30 +1,32 @@
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class HarleyPlayer : MonoBehaviour
 {
-    [SerializeField] private float Health = 100f;
+    [SerializeField] public float Health;
+    [SerializeField] public float MaxHealth = 100f;
     [SerializeField] private float Damage = 5f;
-    public static HarleyPlayer Instance;
 
-  
+    public static HarleyPlayer Instance;
+    
+    
 
     public bool MaskFlipConsentH = false;
-
-    public float CurrentHealth { get; private set; }
-    public float AttackDamage => Damage;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
         Instance = this;
-        CurrentHealth = Health;
+        //Health = MaxHealth;
+        Health = 25;
+
         
     }
     void Start()
     {
-        
+       
 
     }
 
@@ -45,10 +47,5 @@ public class HarleyPlayer : MonoBehaviour
         }
     }
 
-    public void ApplyDamage(float amount)
-    {
-        CurrentHealth = Mathf.Max(0f, CurrentHealth - amount);
-    }
-
-   
+    
 }

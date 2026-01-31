@@ -4,23 +4,20 @@ using UnityEngine.InputSystem;
 
 public class PerryPlayer : MonoBehaviour
 {
-    [SerializeField] private float Health = 125;
+    public float Health;
     [SerializeField] private float Damage = 5f;
-
+    [SerializeField] public float MaxHealth = 125;
    
     public bool MaskFlipConsentP = false;
     
     public static PerryPlayer Instance;
-
-    public float CurrentHealth { get; private set; }
-    public float AttackDamage => Damage;
 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
         Instance = this;
-        CurrentHealth = Health;
+        Health = 10;
         
     }
     void Start()
@@ -42,10 +39,5 @@ public class PerryPlayer : MonoBehaviour
             Debug.Log("Perry has consented for a mask switch");
 
         }
-    }
-
-    public void ApplyDamage(float amount)
-    {
-        CurrentHealth = Mathf.Max(0f, CurrentHealth - amount);
     }
 }
