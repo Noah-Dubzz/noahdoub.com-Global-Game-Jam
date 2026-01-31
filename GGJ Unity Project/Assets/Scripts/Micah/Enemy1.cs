@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy1 : MonoBehaviour
@@ -37,5 +39,14 @@ public class Enemy1 : MonoBehaviour
         }
         
         Debug.Log(targetPlayer.name);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (!other.collider.CompareTag("Player"))
+        {
+            return;
+        }
+        //MUST ADD CODE TO CALL A DAMAGE MANAGER
     }
 }

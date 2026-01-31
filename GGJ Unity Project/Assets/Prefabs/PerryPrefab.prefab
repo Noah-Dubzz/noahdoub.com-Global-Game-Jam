@@ -17,7 +17,8 @@ GameObject:
   - component: {fileID: 6417761138222685763}
   - component: {fileID: 3460974249289048023}
   - component: {fileID: -1232152298516613003}
-  m_Layer: 0
+  - component: {fileID: 2773190420470122078}
+  m_Layer: 6
   m_Name: PerryPrefab
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -287,4 +288,15 @@ MonoBehaviour:
   Health: 125
   Damage: 5
   MaskFlipConsentP: 0
-  HarleyPlayer: {fileID: 713658127852056952, guid: 8858d3fdfb7508549b3f99e583fcdfad, type: 3}
+--- !u!114 &2773190420470122078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8816060740330628025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68c784f0130ed0e42aba23b74b3de3bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerryDamageManager
