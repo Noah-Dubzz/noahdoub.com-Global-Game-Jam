@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float DashCooldown = 2f;
     public bool canDash = true;
     private bool isDashing;
-
+    
     
 
     private CharacterController controller;
@@ -78,12 +78,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        Debug.Log($"Jumping {context.performed} - Is Grounded: {controller.isGrounded}");
-        if (context.performed & controller.isGrounded)
+        if (context.performed && canDash && MaskManager.Instance.Pdam)
         {
-            Debug.Log("We are supposed to Jump");
-            velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-
+            Taunt();
+        }
+        if (context.performed && canDash && MaskManager.Instance.Psupp)
+        {
+            Shield();
+                HarleyPlayer.Instance.Haura.enabled = true;
+            PerryPlayer.Instance.Paura.enabled = true;
         }
     }
 
@@ -102,6 +105,20 @@ public class PlayerMovement : MonoBehaviour
         {
             Heal();
         }
+
+        
+
+    }
+
+    public void Taunt()
+    {
+        Debug.Log("Taunting enemies");
+    }
+
+    public void Shield()
+    {
+        PerryPlayer.Instance.PerryShield += PerryPlayer.Instance.ShieldProtects;
+        HarleyPlayer.Instance.HarleyShield += PerryPlayer.Instance.ShieldProtects;
 
     }
     public void Attack(InputAction.CallbackContext context)
