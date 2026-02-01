@@ -9,6 +9,7 @@ public class OBPSpawning : MonoBehaviour
 {
     public int poolSize = 20;
     public int enemiesThisWave = 50;
+    private int _EnemiesHardCode;
     
     [SerializeField] public ObjectPool[] enemyPrefab;
     private ObjectPool<ObjectPool> enemyPool1;
@@ -28,6 +29,7 @@ public class OBPSpawning : MonoBehaviour
 
     private void Awake()
     {
+        _EnemiesHardCode = enemiesThisWave;
         Instance = this;
         if (enemyPrefab.Length >= 1)
             enemyPool1 = new ObjectPool<ObjectPool>(CreateEnemy1, OnGet, OnRelease);
@@ -147,6 +149,8 @@ public class OBPSpawning : MonoBehaviour
     public void PrepareWave()
     {
         _isRunning = true;
+        ResetPools();
+        enemiesThisWave = _EnemiesHardCode;
         _enemiesLeftToKill = enemiesThisWave;
         _waveNumber += 1;
         AudioManager.Instance?.PlayWaveStinger(_waveNumber);

@@ -75,6 +75,7 @@ namespace CHAVIS
             {
                 case GameState.Playing:
                     PowerUpManager.Instance.HidePUSelection();
+
                     OBPSpawning.Instance.PrepareWave();
                     AudioManager.Instance?.PlayMenuDown();
                     Time.timeScale = 1f;
@@ -82,6 +83,7 @@ namespace CHAVIS
                 case GameState.PowerUpSelection:
                     
                     waveNumber += 1f;
+                   
                     if (waveNumber >= maxWaves)
                     {
                         SceneManager.LoadScene("rmWin");
