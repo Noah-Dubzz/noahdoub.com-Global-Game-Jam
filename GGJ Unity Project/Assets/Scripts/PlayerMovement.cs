@@ -39,7 +39,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float DashDuration = 2f;
     [SerializeField] private float DashSpeed = 10f;
     [SerializeField] private float DashCooldown = 2f;
+    [SerializeField] private float HealCD = 2f;
+    [SerializeField] private float ShieldCD = 2f;
+    [SerializeField] private float TauntCD = 2f;
+
     public bool canDash = true;
+    public bool canHeal = true;
+    public bool canShield = true;
+    public bool canTaunt = true;
     private bool isDashing;
     
     
@@ -51,7 +58,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 dashDirection;
     private Vector3 rollDirection;
     private Vector2 AimInput;
-
 
 
 
@@ -90,8 +96,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (context.performed && canDash && MaskManager.Instance.Psupp)
         {
-            Shield();
-                HarleyPlayer.Instance.Haura.enabled = true;
+            StartCoroutine(Shield());
+            HarleyPlayer.Instance.Haura.enabled = true;
             PerryPlayer.Instance.Paura.enabled = true;
         }
     }
@@ -107,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(RollRoutine());
 
         }
-        if (context.performed && canDash && MaskManager.Instance.Hsupp)
+        if (context.performed && canHeal && MaskManager.Instance.Hsupp)
         {
             Heal();
         }
@@ -119,13 +125,22 @@ public class PlayerMovement : MonoBehaviour
     public void Taunt()
     {
         Debug.Log("Perry Taunting enemies");
+        StartCoroutine(ActivateTaunt());
+    }
+    public IEnumerator ActivateTaunt()
+    {
+        canTaunt = false;
         taunty.ActivateTaunt();
+        yield return new WaitForSeconds(TauntCD);
     }
 
-    public void Shield()
+    public IEnumerator Shield()
     {
+        canShield = false;
         PerryPlayer.Instance.PerryShield += PerryPlayer.Instance.ShieldProtects;
         HarleyPlayer.Instance.HarleyShield += PerryPlayer.Instance.ShieldProtects;
+        yield return new WaitForSeconds(ShieldCD);
+        canShield = true;
 
     }
     public void Attack(InputAction.CallbackContext context)
@@ -216,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Heal()
     {
+        canHeal = false;
         Debug.Log("Heal Started");
         var harley = HarleyPlayer.Instance;
         var perry = PerryPlayer.Instance;
@@ -248,14 +264,14 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(HealthTickH());
         }
 
-        if (perry != null && perry.Health >= perry.MaxHealth)
+        /*if (perry != null && perry.Health >= perry.MaxHealth)
         {
             perry.Health = perry.MaxHealth;
         }
         if (harley != null && harley.Health >= harley.MaxHealth)
         {
             harley.Health = harley.MaxHealth;
-        }
+        }*/
 
     }
     private IEnumerator HealthTickH()
@@ -269,8 +285,6 @@ public class PlayerMovement : MonoBehaviour
                 Harley.Health += HarleyPlayer.Instance.HealthRegen;
                 yield return new WaitForSeconds(TickInterval);
                 ticks++;
-                
-                
             }
             else if (HarleyPlayer.Instance.Health > HarleyPlayer.Instance.MaxHealth)
             {
@@ -289,8 +303,6 @@ public class PlayerMovement : MonoBehaviour
                 yield return new WaitForSeconds(TickInterval);
                 Debug.Log("perry: + " + PerryPlayer.Instance.Health);
                 ticks++;
-
-
             }
             else if (PerryPlayer.Instance.Health > PerryPlayer.Instance.MaxHealth)
             {
@@ -305,8 +317,9 @@ public class PlayerMovement : MonoBehaviour
             HealthBarController.Instance.UpdateHealthBar(0);
             HealthBarController.Instance.UpdateHealthBar(1);
         }
-        yield return new WaitForSeconds(TickInterval);
-        canDash = true;
+        yield return new WaitForSeconds(TickInterval); //Why?
+        yield return new WaitForSeconds(HealCD);
+        canHeal = true; //Why?
     }
     public void ApplyPU(PowerUpsSO powerUp)
     {
