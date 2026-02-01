@@ -1,5 +1,6 @@
 using UnityEngine;
 using Micah;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy_Projectile : MonoBehaviour
@@ -36,7 +37,7 @@ public class Enemy_Projectile : MonoBehaviour
     {
         health = _maxHealth;
         _isMoving = true;
-        FindTargetPlayer();
+        FindTargetPlayer(false);
     }
 
     void Start()
@@ -82,10 +83,24 @@ public class Enemy_Projectile : MonoBehaviour
         }
     }
 
-    void FindTargetPlayer()
+    public void FindTargetPlayer(bool tauntForce)
     {
+        
         spritey.sprite = following;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        if (tauntForce)
+        {
+            if (players[0].layer == LayerMask.NameToLayer("Perry"))
+            {
+                targetPlayer = players[0];
+            }
+            else
+            {
+                targetPlayer = players[1];
+            }
+            return;
+        }
         if (players == null || players.Length == 0)
         {
             targetPlayer = null;

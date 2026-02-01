@@ -33,13 +33,13 @@ public class Enemy1 : MonoBehaviour
     void OnEnable()
     {
         health = _maxHealth;
-        FindTargetPlayer();
+        FindTargetPlayer(false);
     }
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        FindTargetPlayer();
+        FindTargetPlayer(false);
     }
 
     void FixedUpdate()
@@ -53,9 +53,21 @@ public class Enemy1 : MonoBehaviour
         }
     }
 
-    void FindTargetPlayer()
+    public void FindTargetPlayer(bool tauntForce)
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        if (tauntForce)
+        {
+            if (players[0].layer == LayerMask.NameToLayer("Perry"))
+            {
+                targetPlayer = players[0];
+            }
+            else
+            {
+                targetPlayer = players[1];
+            }
+            return;
+        }
         if (players == null || players.Length == 0)
         {
             targetPlayer = null;

@@ -39,8 +39,6 @@ public class MaskManager : MonoBehaviour
     }
     void Start()
     {
-       
-        
         HarleySupport();
         PerryDamage();
     }
