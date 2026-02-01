@@ -10,13 +10,13 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] HarleyPlayer Harley;
     [SerializeField] PerryPlayer Perry;
-    
+
 
     [SerializeField] private GameObject sharp;
     [SerializeField] private GameObject faceAttack;
     [SerializeField] private GameObject faceMove;
 
-    [SerializeField] private float HealthRegen = 5f;
+    
     [SerializeField] private float TickInterval = 5f;
     [SerializeField] private float Duration = 5f;
 
@@ -133,13 +133,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-   public void Aiming(InputAction.CallbackContext context)
+    public void Aiming(InputAction.CallbackContext context)
     {
         AimInput = context.ReadValue<Vector2>();
     }
         
         // Update is called once per frame
-        void Update()
+    void Update()
     {
         
         this.enabled = true;
@@ -159,8 +159,6 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         
-        
-        
     }
 
     private void  onTriggerEnter (Collider other)
@@ -175,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator RollRoutine()
     {
         canDash = false;
+        HarleyPlayer.Instance.Damage += HarleyPlayer.Instance.DashDamage;
         isDashing = true;
 
         //animator.SetTrigger("Roll");
@@ -202,6 +201,7 @@ public class PlayerMovement : MonoBehaviour
 
         isDashing = false;
 
+        HarleyPlayer.Instance.Damage -= HarleyPlayer.Instance.DashDamage;
         // Start cooldown
         yield return new WaitForSeconds(DashCooldown);
         canDash = true;
@@ -241,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
             if (ticks < 7 && Harley.Health < Harley.MaxHealth)
             {
                 
-                Harley.Health += HealthRegen;
+                Harley.Health += HarleyPlayer.Instance.HealthRegen;
                 yield return new WaitForSeconds(TickInterval);
                 ticks++;
                 
@@ -258,13 +258,9 @@ public class PlayerMovement : MonoBehaviour
                 break;
             }
 
-        }
-        ticks = 0;
-        while (Duration * Time.deltaTime > 0)
-        {
             if (ticks < 7 && PerryPlayer.Instance.Health < PerryPlayer.Instance.MaxHealth)
             {
-                PerryPlayer.Instance.Health += HealthRegen;
+                PerryPlayer.Instance.Health += HarleyPlayer.Instance.HealthRegen;
                 yield return new WaitForSeconds(TickInterval);
                 Debug.Log("perry: + " + PerryPlayer.Instance.Health);
                 ticks++;
@@ -285,7 +281,5 @@ public class PlayerMovement : MonoBehaviour
         }
         yield return new WaitForSeconds(TickInterval);
         canDash = true;
-
     }
-  
 }

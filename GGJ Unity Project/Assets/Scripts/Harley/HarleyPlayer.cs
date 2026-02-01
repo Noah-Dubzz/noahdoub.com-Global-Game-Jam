@@ -6,8 +6,11 @@ using UnityEngine.InputSystem;
 public class HarleyPlayer : MonoBehaviour
 {
     [SerializeField] public float Health;
+    public float shieldHealth;
     [SerializeField] public float MaxHealth = 100f;
-    [SerializeField] private float Damage = 5f;
+    [SerializeField] public float Damage = 5f;
+    [SerializeField] public float DashDamage = 3f;
+    [SerializeField] public float HealthRegen = 5f;
     [SerializeField] public float HarleyShield = 0f;
     public bool canDamageH = false;
 
@@ -27,10 +30,7 @@ public class HarleyPlayer : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        //Health = MaxHealth;
-        Health = 25;
-
-        
+        Health = MaxHealth;
     }
     void Start()
     {

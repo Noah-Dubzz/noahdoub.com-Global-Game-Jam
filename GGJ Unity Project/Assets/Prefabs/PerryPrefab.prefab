@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5001287818240552839}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: AOE
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -744,6 +744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PerryPlayer
   Health: 60
+  shieldHealth: 0
   Damage: 5
   MaxHealth: 125
   PerryShield: 0
