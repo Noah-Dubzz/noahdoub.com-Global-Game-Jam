@@ -8,18 +8,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 0a3ac81850be0884db906804f7fa54a4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/rmGame.unity
     guid: 6cfe405837a91bc41b9fd1216d0d0b96
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/rmLose.unity
     guid: c2b72c633503d8b4e8def5a8621cd9d9
   - enabled: 1
     path: Assets/Scenes/rmWin.unity
     guid: 7728206aa3478a84ab743b788c4d1627
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
     path: Assets/Scenes/Micah_Enemy.unity
     guid: 1acc538c281294e46b3d17f8b7ed36be
