@@ -210,26 +210,44 @@ public class PlayerMovement : MonoBehaviour
     public void Heal()
     {
         Debug.Log("Heal Started");
-        if (HarleyPlayer.Instance.Health < Harley.MaxHealth - (Harley.MaxHealth * 0.25f) || Perry.Health < Perry.MaxHealth - (Perry.MaxHealth * 0.25f) )
+        var harley = HarleyPlayer.Instance;
+        var perry = PerryPlayer.Instance;
+
+        if (harley == null && perry == null)
         {
-            Debug.Log("Harley: " + HarleyPlayer.Instance.Health);
-            HarleyPlayer.Instance.Health += (HarleyPlayer.Instance.MaxHealth * 0.25f);
-            Debug.Log("Harley: " + HarleyPlayer.Instance.Health);
-            Debug.Log("Perry : " + PerryPlayer.Instance.Health);
-            PerryPlayer.Instance.Health += Mathf.Round((PerryPlayer.Instance.MaxHealth * 0.25f));
-            Debug.Log("Perry : " + PerryPlayer.Instance.Health);
-            StartCoroutine(HealthTickH());
-            
+            Debug.LogWarning("Heal called but no player instances are present.");
+            return;
         }
 
-        if (Perry.Health >= Perry.MaxHealth)
+        bool harleyCanHeal = harley != null && harley.Health < harley.MaxHealth - (harley.MaxHealth * 0.25f);
+        bool perryCanHeal = perry != null && perry.Health < perry.MaxHealth - (perry.MaxHealth * 0.25f);
+
+        if (harleyCanHeal || perryCanHeal)
         {
-            
-            Perry.Health = Perry.MaxHealth;
+            if (harley != null)
+            {
+                Debug.Log("Harley: " + harley.Health);
+                harley.Health += (harley.MaxHealth * 0.25f);
+                Debug.Log("Harley: " + harley.Health);
+            }
+
+            if (perry != null)
+            {
+                Debug.Log("Perry : " + perry.Health);
+                perry.Health += Mathf.Round((perry.MaxHealth * 0.25f));
+                Debug.Log("Perry : " + perry.Health);
+            }
+
+            StartCoroutine(HealthTickH());
         }
-        if (Harley.Health >= Harley.MaxHealth)
+
+        if (perry != null && perry.Health >= perry.MaxHealth)
         {
-            Harley.Health = Harley.MaxHealth;
+            perry.Health = perry.MaxHealth;
+        }
+        if (harley != null && harley.Health >= harley.MaxHealth)
+        {
+            harley.Health = harley.MaxHealth;
         }
 
     }
