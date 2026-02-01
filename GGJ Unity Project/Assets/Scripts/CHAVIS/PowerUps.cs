@@ -18,6 +18,7 @@ public class PowerUps : MonoBehaviour
 
     private void OnMouseDown()
     {
+        AudioManager.Instance?.PlayInGameSelect();
         PowerUpManager.Instance.SelectPowerUp(puInfo);
         PlayerMovement.Instance.ApplyPU(puInfo);
         Time.timeScale = 1f;

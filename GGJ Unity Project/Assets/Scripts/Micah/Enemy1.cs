@@ -104,6 +104,7 @@ public class Enemy1 : MonoBehaviour
         health -= damage;
         if (health <= 0f)
         {
+            AudioManager.Instance?.PlayRedBloodCell();
             if (_objectPool != null)
             {
                 _objectPool.ReleaseObject();

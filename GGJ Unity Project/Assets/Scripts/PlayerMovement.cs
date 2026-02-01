@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping & overall speed")]
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float gravity = -9.81f;
 
 
@@ -147,6 +146,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.started)
         {
+            if (MaskManager.Instance != null)
+            {
+                if (MaskManager.Instance.HDam)
+                {
+                    AudioManager.Instance?.PlayHarleyAttack();
+                }
+
+                if (MaskManager.Instance.Pdam)
+                {
+                    AudioManager.Instance?.PlayPerryAttack();
+                }
+            }
            faceAttack.SetActive(true);
         }
         if(context.canceled)
@@ -197,6 +208,8 @@ public class PlayerMovement : MonoBehaviour
         canDash = false;
         HarleyPlayer.Instance.Damage += HarleyPlayer.Instance.DashDamage;
         isDashing = true;
+
+        AudioManager.Instance?.PlaySwosh();
 
         //animator.SetTrigger("Roll");
         //  the current movement direction at the start of the roll
@@ -277,19 +290,27 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator HealthTickH()
     {
         int ticks = 0;
+        var harley = HarleyPlayer.Instance != null ? HarleyPlayer.Instance : Harley;
+        var perry = PerryPlayer.Instance != null ? PerryPlayer.Instance : Perry;
+        float regen = HarleyPlayer.Instance != null ? HarleyPlayer.Instance.HealthRegen : (Harley != null ? Harley.HealthRegen : 0f);
+
+        if (harley == null && perry == null)
+        {
+            canHeal = true;
+            yield break;
+        }
         while ( Duration * Time.deltaTime> 0)
         {
-            if (ticks < 7 && Harley.Health < Harley.MaxHealth)
+            if (harley != null && ticks < 7 && harley.Health < harley.MaxHealth)
             {
-                
-                Harley.Health += HarleyPlayer.Instance.HealthRegen;
+                harley.Health += regen;
                 yield return new WaitForSeconds(TickInterval);
                 ticks++;
             }
-            else if (HarleyPlayer.Instance.Health > HarleyPlayer.Instance.MaxHealth)
+            else if (harley != null && harley.Health > harley.MaxHealth)
             {
-                HarleyPlayer.Instance.Health = HarleyPlayer.Instance.MaxHealth;
-                Debug.Log("break at - Harley: + " + HarleyPlayer.Instance.Health);
+                harley.Health = harley.MaxHealth;
+                Debug.Log("break at - Harley: + " + harley.Health);
                 break;
             }
             else
@@ -297,25 +318,28 @@ public class PlayerMovement : MonoBehaviour
                 break;
             }
 
-            if (ticks < 7 && PerryPlayer.Instance.Health < PerryPlayer.Instance.MaxHealth)
+            if (perry != null && ticks < 7 && perry.Health < perry.MaxHealth)
             {
-                PerryPlayer.Instance.Health += HarleyPlayer.Instance.HealthRegen;
+                perry.Health += regen;
                 yield return new WaitForSeconds(TickInterval);
-                Debug.Log("perry: + " + PerryPlayer.Instance.Health);
+                Debug.Log("perry: + " + perry.Health);
                 ticks++;
             }
-            else if (PerryPlayer.Instance.Health > PerryPlayer.Instance.MaxHealth)
+            else if (perry != null && perry.Health > perry.MaxHealth)
             {
-                PerryPlayer.Instance.Health = PerryPlayer.Instance.MaxHealth;
-                Debug.Log("break at - perry: + " + PerryPlayer.Instance.Health);
+                perry.Health = perry.MaxHealth;
+                Debug.Log("break at - perry: + " + perry.Health);
                 break;
             }
             else 
             {
                 break;
             }
-            HealthBarController.Instance.UpdateHealthBar(0);
-            HealthBarController.Instance.UpdateHealthBar(1);
+            if (HealthBarController.Instance != null)
+            {
+                HealthBarController.Instance.UpdateHealthBar(0);
+                HealthBarController.Instance.UpdateHealthBar(1);
+            }
         }
         yield return new WaitForSeconds(TickInterval); //Why?
         yield return new WaitForSeconds(HealCD);

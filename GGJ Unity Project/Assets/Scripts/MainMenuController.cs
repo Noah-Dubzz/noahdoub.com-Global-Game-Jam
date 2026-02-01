@@ -13,6 +13,7 @@ public class MainMenuController : MonoBehaviour
     public AudioClip selectSfx;
     public AudioSource audioSource; // optional, will use PlayClipAtPoint if null
 
+
     public void StartGame()
     {
 
@@ -49,7 +50,14 @@ public class MainMenuController : MonoBehaviour
 
     private System.Collections.IEnumerator PlaySfxThen(Action callback)
     {
-        if (selectSfx != null)
+        float waitTime = 0f;
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayMenuSelect();
+            waitTime = AudioManager.Instance.MenuSelectDuration;
+        }
+        else if (selectSfx != null)
         {
             if (audioSource != null)
             {
@@ -60,7 +68,12 @@ public class MainMenuController : MonoBehaviour
                 var pos = Camera.main != null ? Camera.main.transform.position : Vector3.zero;
                 AudioSource.PlayClipAtPoint(selectSfx, pos);
             }
-            yield return new WaitForSeconds(selectSfx.length);
+            waitTime = selectSfx.length;
+        }
+
+        if (waitTime > 0f)
+        {
+            yield return new WaitForSeconds(waitTime);
         }
         else
         {

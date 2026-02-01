@@ -24,6 +24,7 @@ public class OBPSpawning : MonoBehaviour
     private bool _isPrewarming = false;
     private bool _isRunning = true;
     private int _enemiesLeftToKill;
+    private int _waveNumber = 0;
 
     private void Awake()
     {
@@ -147,6 +148,8 @@ public class OBPSpawning : MonoBehaviour
     {
         _isRunning = true;
         _enemiesLeftToKill = enemiesThisWave;
+        _waveNumber += 1;
+        AudioManager.Instance?.PlayWaveStinger(_waveNumber);
         PrewarmPools();
     }
     

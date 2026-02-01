@@ -76,6 +76,7 @@ namespace CHAVIS
                 case GameState.Playing:
                     PowerUpManager.Instance.HidePUSelection();
                     OBPSpawning.Instance.PrepareWave();
+                    AudioManager.Instance?.PlayMenuDown();
                     break;
                 case GameState.PowerUpSelection:
                     waveNumber++;
@@ -84,6 +85,8 @@ namespace CHAVIS
                         SceneManager.LoadScene("rmWin");
                     }
                     PowerUpManager.Instance.ShowPUSelection();
+                    AudioManager.Instance?.PlayPause();
+                    AudioManager.Instance?.PlayMenuUp();
                     break;
             }
         }
