@@ -14,6 +14,7 @@ public class HarleyPlayer : MonoBehaviour
     [SerializeField] public float HarleyShield = 0f;
     public bool canDamageH = false;
 
+    [SerializeField] public SpriteRenderer HarleySprite;
 
 
     public static HarleyPlayer Instance;
