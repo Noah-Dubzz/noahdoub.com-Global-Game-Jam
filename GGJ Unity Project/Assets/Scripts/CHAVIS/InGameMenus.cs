@@ -73,9 +73,12 @@ namespace CHAVIS
                 case GameState.Playing:
                     PowerUpManager.Instance.HidePUSelection();
                     OBPSpawning.Instance.PrepareWave();
+                    AudioManager.Instance?.PlayMenuDown();
                     break;
                 case GameState.PowerUpSelection:
                     PowerUpManager.Instance.ShowPUSelection();
+                    AudioManager.Instance?.PlayPause();
+                    AudioManager.Instance?.PlayMenuUp();
                     break;
             }
         }

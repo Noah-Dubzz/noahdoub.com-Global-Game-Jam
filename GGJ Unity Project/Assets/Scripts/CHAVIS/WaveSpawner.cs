@@ -19,6 +19,7 @@ namespace CHAVIS
 
         private bool readyToCountDown;
         private bool loggedMissingConfig;
+        private bool _waveStingerPlayed;
 
         public float enemyInsetDefault = 1.5f;
         private void Awake()
@@ -72,6 +73,12 @@ namespace CHAVIS
 
                 countdown = waves[currentWaveIndex].timeToNextWave;
 
+                if (!_waveStingerPlayed)
+                {
+                    AudioManager.Instance?.PlayWaveStinger(currentWaveIndex + 1);
+                    _waveStingerPlayed = true;
+                }
+
                 if (spawnPoints != null && spawnPoints.Count > 0 && waves[currentWaveIndex].enemiesLeft > 0)
                 {
                     StartCoroutine(SpawnWave());
@@ -86,6 +93,7 @@ namespace CHAVIS
             {
                 WaveEnd();
                 readyToCountDown = true;
+                _waveStingerPlayed = false;
 
                 currentWaveIndex += 1;
             }

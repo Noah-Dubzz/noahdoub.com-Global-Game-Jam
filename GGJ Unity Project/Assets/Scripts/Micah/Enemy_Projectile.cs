@@ -122,6 +122,7 @@ public class Enemy_Projectile : MonoBehaviour
     void Fire()
     {
         spritey.sprite = attacking;
+        AudioManager.Instance?.PlaySpit();
         if (bulletObjPool.Instance != null && targetPlayer != null)
         {
             GameObject bullet = bulletObjPool.Instance.GetBullet(this.transform.position, this.transform.rotation);
@@ -163,6 +164,7 @@ public class Enemy_Projectile : MonoBehaviour
         health -= damage;
         if (health <= 0f)
         {
+            AudioManager.Instance?.PlayWhiteBloodCell();
             if (_objectPool != null)
             {
                 _objectPool.ReleaseObject();

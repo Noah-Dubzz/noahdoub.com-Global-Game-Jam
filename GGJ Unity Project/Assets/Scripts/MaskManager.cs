@@ -74,6 +74,7 @@ public class MaskManager : MonoBehaviour
                     Psupp = true;
                     HarleyDamage();
                     PerrySupport();
+                    AudioManager.Instance?.PlaySwap(false);
                     canflip = false;
                 }
 
@@ -85,6 +86,7 @@ public class MaskManager : MonoBehaviour
                     Psupp = false;
                     HarleySupport();
                     PerryDamage();
+                    AudioManager.Instance?.PlaySwap(true);
                     canflip = false;
                 }
 
