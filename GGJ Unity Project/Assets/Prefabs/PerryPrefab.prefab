@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 210631856425089233}
   - component: {fileID: 1917798395908300389}
   - component: {fileID: 5001287818240552839}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: AOE
   m_Icon: {fileID: 0}
@@ -389,7 +389,8 @@ GameObject:
   - component: {fileID: -1232152298516613003}
   - component: {fileID: 353479252835293188}
   - component: {fileID: 8632919755173372442}
-  m_Layer: 7
+  - component: {fileID: 8632721116151217303}
+  m_Layer: 6
   m_Name: PerryPrefab
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -697,7 +698,6 @@ MonoBehaviour:
   Paura: {fileID: 3186788497754255316}
   Supp: {fileID: 2100000, guid: 82a9e13242de07344a42465f6078a4a6, type: 2}
   Dammage: {fileID: 2100000, guid: 2e71acf0bdcba2744bec010224dc9e34, type: 2}
-  ownedCards: []
 --- !u!212 &353479252835293188
 SpriteRenderer:
   serializedVersion: 2
@@ -770,3 +770,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PerryDamageManager
   meleeInvulnerabilityTime: 1
+--- !u!114 &8632721116151217303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8816060740330628025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bb28d0a2cd14eada011cfd3cc026c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Perry.Taunt

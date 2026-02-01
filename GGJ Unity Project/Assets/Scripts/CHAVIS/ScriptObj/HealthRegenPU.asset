@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: HealthRegenPU
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpsSO
   powerUpEffect: 2
-  effectValue1: 0
+  effectValue1: 3
   effectValue2: 0
   isUnique: 0

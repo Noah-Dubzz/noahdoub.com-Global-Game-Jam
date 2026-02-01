@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TauntPU
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpsSO
   powerUpEffect: 1
-  effectValue1: 0
+  effectValue1: 2
   effectValue2: 0
   isUnique: 0

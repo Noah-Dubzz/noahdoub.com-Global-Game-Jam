@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ShieldHealthPU
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpsSO
   powerUpEffect: 3
-  effectValue1: 0
+  effectValue1: 4
   effectValue2: 0
   isUnique: 0

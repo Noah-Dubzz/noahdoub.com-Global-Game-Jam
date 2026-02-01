@@ -1,5 +1,6 @@
 using UnityEngine;
 using Micah;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy_Projectile : MonoBehaviour
@@ -15,18 +16,34 @@ public class Enemy_Projectile : MonoBehaviour
     private float _nextFireTime;
     private bool _isMoving = true;
     private Rigidbody _rb;
+    private ObjectPool _objectPool;
+    private float _maxHealth;
+    
     [SerializeField] private SpriteRenderer spritey;
     [SerializeField] private Sprite attacking;
     [SerializeField] private Sprite following;
+    
     private PerryDamageManager _perryManager;
     private HarleyDamageManager _harleyManager;
 
-    void Start()
+    void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _objectPool = GetComponent<ObjectPool>();
+        _maxHealth = health;
+    }
+
+    void OnEnable()
+    {
+        health = _maxHealth;
+        _isMoving = true;
+        FindTargetPlayer(false);
+    }
+
+    void Start()
+    {
         _perryManager = FindAnyObjectByType<PerryDamageManager>();
         _harleyManager = FindAnyObjectByType<HarleyDamageManager>();
-        FindTargetPlayer();
     }
 
     void FixedUpdate()
@@ -66,10 +83,24 @@ public class Enemy_Projectile : MonoBehaviour
         }
     }
 
-    void FindTargetPlayer()
+    public void FindTargetPlayer(bool tauntForce)
     {
+        
         spritey.sprite = following;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        if (tauntForce)
+        {
+            if (players[0].layer == LayerMask.NameToLayer("Perry"))
+            {
+                targetPlayer = players[0];
+            }
+            else
+            {
+                targetPlayer = players[1];
+            }
+            return;
+        }
         if (players == null || players.Length == 0)
         {
             targetPlayer = null;
@@ -113,12 +144,33 @@ public class Enemy_Projectile : MonoBehaviour
         }
     }
     
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.gameObject.CompareTag("Slash"))
+        {
+            takeDamage(HarleyPlayer.Instance.Damage);
+        }
+        if (other.gameObject.CompareTag("AOE"))
+        {
+            takeDamage(PerryPlayer.Instance.Damage);
+        }
+    }
+    
     void takeDamage(float damage)
     {
         health -= damage;
         if (health <= 0f)
         {
-            Destroy(gameObject);
+            if (_objectPool != null)
+            {
+                _objectPool.ReleaseObject();
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
     

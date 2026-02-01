@@ -17,6 +17,7 @@ public class OBPSpawning : MonoBehaviour
     [SerializeField] private List<GameObject> spawnPoints;
 
     public static OBPSpawning Instance;
+    public readonly HashSet<ObjectPool> ActiveEnemies = new HashSet<ObjectPool>();
 
     public float spawnDelay = 1.0f;
     private float _spawnTimer;
@@ -61,12 +62,14 @@ public class OBPSpawning : MonoBehaviour
     private void OnGet(ObjectPool enemy)
     {
         enemy.gameObject.SetActive(true);
+        ActiveEnemies.Add(enemy);
         //Spawn(enemy);
         
     }
     private void OnRelease(ObjectPool enemy)
     {
         enemy.gameObject.SetActive(false);
+        ActiveEnemies.Remove(enemy);
         if (!_isPrewarming)
         {
             enemiesThisWave--;
@@ -158,6 +161,7 @@ public class OBPSpawning : MonoBehaviour
         enemyPool1.Clear();
         enemyPool2.Clear();
         enemyPool3.Clear();
+        ActiveEnemies.Clear();
         
         PrewarmPools(); 
     }
