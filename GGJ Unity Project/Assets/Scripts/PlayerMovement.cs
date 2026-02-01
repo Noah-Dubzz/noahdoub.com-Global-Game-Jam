@@ -335,6 +335,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ApplyPU(PowerUpsSO powerUp)
     {
+        Debug.Log("powerup is selected");
 
         if (powerUp.powerUpEffect == PowerUpEffect.DashDamageIncrease)
         {

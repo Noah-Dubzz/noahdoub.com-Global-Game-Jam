@@ -13,6 +13,10 @@ public class PerryPlayer : MonoBehaviour
     [SerializeField] public float PerryShield = 0f;
     [SerializeField] public float ShieldProtects = 20f;
     [SerializeField] public SpriteRenderer PerrySprite;
+    [SerializeField] public GameObject consentP;
+    
+
+   
     public bool canDamageP = true;
 
     public bool MaskFlipConsentP = false;
@@ -66,15 +70,20 @@ public class PerryPlayer : MonoBehaviour
         {
             MaskFlipConsentP = true;
             Debug.Log("Perry has consented for a mask switch");
+            consentP.SetActive(true);
+           
             if (MaskManager.Instance.HDam)
             {
                 canDamageP = true;
+                
             }
             if (MaskManager.Instance.Hsupp)
             {
                 canDamageP = false;
+                
             }
 
         }
+        
     }
 }

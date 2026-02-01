@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PowerUpManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PowerUpManager : MonoBehaviour
     [SerializeField] GameObject puPrefabs;
     [SerializeField] Transform puPositionOne;
     [SerializeField] Transform puPositionTwo;
+    
     [SerializeField] List<PowerUpsSO> PowerUpList;
     public static PowerUpManager Instance;
 
@@ -81,6 +83,9 @@ public class PowerUpManager : MonoBehaviour
         GameObject powerUpGO = Instantiate(puPrefabs, position.position, Quaternion.identity, position);
         PowerUps powerUp = powerUpGO.GetComponent<PowerUps>();
         powerUp.SetUp(puSO);
+        
+
+
         return powerUpGO;
     }
 

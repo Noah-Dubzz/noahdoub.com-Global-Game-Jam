@@ -14,6 +14,8 @@ public class HarleyPlayer : MonoBehaviour
     [SerializeField] public float HealthRegen = 5f;
     [SerializeField] public float HarleyShield = 0f;
     public bool canDamageH = false;
+    [SerializeField] public GameObject consentH;
+   
 
     [SerializeField] public SpriteRenderer HarleySprite;
 
@@ -65,16 +67,22 @@ public class HarleyPlayer : MonoBehaviour
     {
         if (context.performed)
         {
+            
             MaskFlipConsentH = true;
             Debug.Log("Harley has consented for a mask switch");
+            consentH.SetActive(true);
             if (MaskManager.Instance.HDam)
             { 
             canDamageH = true;
+                
             }
             if(MaskManager.Instance.Hsupp)
             {
                 canDamageH = false;
+                
+
             }       
         }
+       
     }    
 }
