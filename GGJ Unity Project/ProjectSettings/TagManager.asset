@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
+  - Shield
+  - Slash
+  - AOE
   layers:
   - Default
   - TransparentFX
@@ -14,7 +17,7 @@ TagManager:
   - UI
   - Perry
   - Harley
-  - 
+  - Shield
   - 
   - 
   - 
