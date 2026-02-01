@@ -367,6 +367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4074c488cf192724d9d4a1f2dcd37e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CHAVIS.InGameMenus
+  maxWaves: 10
+  waveNumber: 1
 --- !u!4 &378776879
 Transform:
   m_ObjectHideFlags: 0
@@ -2175,7 +2177,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c5d389a78182ef644b8768a0214ee977, type: 2}
   - {fileID: 11400000, guid: 83aae4d3dcdaed54982c876edf676f40, type: 2}
   - {fileID: 11400000, guid: 76a55aafd1e75ef448647108e77029e5, type: 2}
-  - {fileID: 11400000, guid: 9612653bd963c744bbda496bbad7eeeb, type: 2}
   - {fileID: 11400000, guid: 5850deafa96376c4c847792d14846f8e, type: 2}
 --- !u!4 &2083730810
 Transform:
