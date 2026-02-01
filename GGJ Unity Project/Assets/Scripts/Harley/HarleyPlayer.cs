@@ -46,8 +46,6 @@ public class HarleyPlayer : MonoBehaviour
         if (HarleyShield > 0)
         {
             Haura.enabled = true;
-
-            
         }
         
 

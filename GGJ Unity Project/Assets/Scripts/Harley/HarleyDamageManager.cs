@@ -1,10 +1,11 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HarleyDamageManager : MonoBehaviour
 
 {
     public float meleeInvulnerabilityTime = 1f;
-    private HarleyPlayer _harleyPlayer = null;
     private float _invulTimer = 0f;
     private bool _isInvul = false;
     
@@ -16,10 +17,10 @@ public class HarleyDamageManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _harleyPlayer = FindAnyObjectByType<HarleyPlayer>();
         _renderer = GetComponentInChildren<Renderer>();
         _harleyMat = _renderer.material;
         _basicColor = _harleyMat.color;
+        HarleyPlayer.Instance.Haura.enabled = false;
     }
 
     // Update is called once per frame
@@ -43,46 +44,48 @@ public class HarleyDamageManager : MonoBehaviour
 
     public void MeleeDamage(float damage)
     {
+        Debug.Log("HERE");
         if (Time.time >= _invulTimer && !_isInvul)
         {
             if (HarleyPlayer.Instance.HarleyShield > 0 && HarleyPlayer.Instance.Haura.enabled)
             {
                 HarleyPlayer.Instance.HarleyShield -= damage;
-            }
-            if (HarleyPlayer.Instance.HarleyShield < 0 && HarleyPlayer.Instance.Haura.enabled)
-            {
-                _harleyPlayer.Health -= HarleyPlayer.Instance.HarleyShield;
-                HarleyPlayer.Instance.HarleyShield = 0;
-                HarleyPlayer.Instance.Haura.enabled = false;
+                if (HarleyPlayer.Instance.HarleyShield <= 0)
+                {
+                    HarleyPlayer.Instance.Health -= (damage - Math.Abs(HarleyPlayer.Instance.HarleyShield));
+                    HarleyPlayer.Instance.HarleyShield = 0;
+                    HarleyPlayer.Instance.Haura.enabled = false;
+                }
             }
             if (HarleyPlayer.Instance.Haura.enabled == false)
             {
-                _harleyPlayer.Health -= damage;
+                Debug.Log("HERE");
+                HarleyPlayer.Instance.Health -= damage;
                 _invulTimer = Time.time + meleeInvulnerabilityTime;
                 _harleyMat.color = Color.red;
                 _isInvul = true;
-
-                Debug.Log(_harleyPlayer.Health);
+                
             }
         }
-        
+        HealthBarController.Instance.UpdateHealthBar(0);
     }
     public void BulletDamage(float damage)
     {
         if(HarleyPlayer.Instance.HarleyShield > 0 && HarleyPlayer.Instance.Haura.enabled)
         {
             HarleyPlayer.Instance.HarleyShield -= damage;
+            if (HarleyPlayer.Instance.HarleyShield <= 0)
+            {
+                HarleyPlayer.Instance.Health -= (damage - Math.Abs(HarleyPlayer.Instance.HarleyShield));
+                HarleyPlayer.Instance.HarleyShield = 0;
+                HarleyPlayer.Instance.Haura.enabled = false;
+            }
         }
-        if (HarleyPlayer.Instance.HarleyShield < 0 &&  HarleyPlayer.Instance.Haura.enabled)
+        else
         {
-            _harleyPlayer.Health -= HarleyPlayer.Instance.HarleyShield;
-            HarleyPlayer.Instance.HarleyShield = 0;
-            HarleyPlayer.Instance.Haura.enabled = false;
+            HarleyPlayer.Instance.Health -= damage;
         }
-        if (HarleyPlayer.Instance.Haura.enabled == false)
-        {
-            _harleyPlayer.Health -= damage;
-            //Debug.Log(_harleyPlayer.Health);
-        }
+        
+        HealthBarController.Instance.UpdateHealthBar(0);
     }
 }

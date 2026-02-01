@@ -33,10 +33,12 @@ namespace Micah
         
             if (otherLayer == _harleyLayer)
             {
+                _harleyDamageManager = FindAnyObjectByType<HarleyDamageManager>();
                 _harleyDamageManager?.MeleeDamage(damage);
             }
             else if (otherLayer == _perryLayer)
             {
+                _perryDamageManager = FindAnyObjectByType<PerryDamageManager>();
                 _perryDamageManager?.MeleeDamage(damage);
             }
         }

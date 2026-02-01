@@ -77,13 +77,13 @@ public class Enemy1 : MonoBehaviour
         if (players.Length == 1)
         {
             targetPlayer = players[0];
-            Debug.Log(targetPlayer.name);
+            //Debug.Log(targetPlayer.name);
             return;
         }
 
         int index = Random.Range(0, players.Length);
         targetPlayer = players[index];
-        Debug.Log(targetPlayer.name);
+        //Debug.Log(targetPlayer.name);
     }
 
     private void OnTriggerEnter(Collider other)
