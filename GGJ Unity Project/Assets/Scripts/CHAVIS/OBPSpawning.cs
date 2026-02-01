@@ -19,6 +19,8 @@ public class OBPSpawning : MonoBehaviour
     public float spawnDelay = 1.0f;
     private float _spawnTimer;
     private bool _isPrewarming = false;
+    private bool _isRunning = true;
+    private int _enemiesLeftToKill;
 
     private void Awake()
     {
@@ -79,25 +81,31 @@ public class OBPSpawning : MonoBehaviour
 
     public PowerUpManager powerUpManager;
     
+
     private void Start()
     {
-        PrewarmPools();
+        PrepareWave();
     }
     private void Update()
     {
-        if (enemiesThisWave <= 0)
-        {
-            //Debug.Log("You survived every wave!");
-            //SceneManager.LoadScene("Win");
-            return;
-        }
-        
-        _spawnTimer += Time.deltaTime;
-        int currentActive = enemyPool1.CountActive + enemyPool2.CountActive + enemyPool3.CountActive;
-        if (currentActive < poolSize && _spawnTimer >= spawnDelay)
-        {
-            ActivateEnemy();
-            _spawnTimer = 0f;
+        if(_isRunning) {
+            if (enemiesThisWave <= 0)
+            {
+                //Debug.Log("You survived every wave!");
+                //SceneManager.LoadScene("Win");
+                Debug.Log("WAVE FINISHED");
+                _isRunning = false;
+                return;
+            }
+
+            _spawnTimer += Time.deltaTime;
+            int currentActive = enemyPool1.CountActive + enemyPool2.CountActive + enemyPool3.CountActive;
+            if (currentActive < poolSize && _spawnTimer >= spawnDelay && currentActive != _enemiesLeftToKill)
+            {
+                ActivateEnemy();
+                _enemiesLeftToKill--;
+                _spawnTimer = 0f;
+            }
         }
     }
 
@@ -125,6 +133,12 @@ public class OBPSpawning : MonoBehaviour
         {
             Spawn(enemy);
         }
+    }
+
+    public void PrepareWave()
+    {
+        _enemiesLeftToKill = enemiesThisWave;
+        PrewarmPools();
     }
     
     public void ResetPools()
