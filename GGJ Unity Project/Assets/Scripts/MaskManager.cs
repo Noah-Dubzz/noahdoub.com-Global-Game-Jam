@@ -6,6 +6,10 @@ public class MaskManager : MonoBehaviour
     [SerializeField]public HarleyPlayer harleyPlayer;
     [SerializeField]public PerryPlayer perryPlayer;
     public static MaskManager Instance;
+    public Sprite Harleysupp;
+    public Sprite Perrysupp;
+    public Sprite HarleyDam;
+    public Sprite PerryDam;
     
     public bool Hsupp = true;
     public bool HDam = false;
@@ -77,26 +81,27 @@ public class MaskManager : MonoBehaviour
     public void HarleySupport()
     {
         Debug.Log("Harley is in support Mode");
-        
+        HarleyPlayer.Instance.HarleySprite.sprite = Harleysupp;
 
     }
 
     public void HarleyDamage()
     {
         Debug.Log("Harley is in Damage Mode");
-        
+        HarleyPlayer.Instance.HarleySprite.sprite = HarleyDam;
 
     }
 
     public void PerrySupport()
     {
         Debug.Log("perry is in support Mode");
-        
+        PerryPlayer.Instance.PerrySprite.sprite = Perrysupp;
     }
     public void PerryDamage()
     {
         Debug.Log("Perry is in damage mode");
-        
+         PerryPlayer.Instance.PerrySprite.sprite = PerryDam;
+
     }
 
     

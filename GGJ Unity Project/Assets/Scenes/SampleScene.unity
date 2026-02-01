@@ -664,6 +664,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaskManager
   harleyPlayer: {fileID: 713658127852056952, guid: 8858d3fdfb7508549b3f99e583fcdfad, type: 3}
   perryPlayer: {fileID: -1232152298516613003, guid: 2ec2582796177234f99cd1af07c3e5f9, type: 3}
+  Harleysupp: {fileID: -2734878, guid: dc40e8ea6e85c844ebbd4467ae55b2ba, type: 3}
+  Perrysupp: {fileID: 598044303, guid: dc40e8ea6e85c844ebbd4467ae55b2ba, type: 3}
+  HarleyDam: {fileID: 1225402005, guid: dc40e8ea6e85c844ebbd4467ae55b2ba, type: 3}
+  PerryDam: {fileID: 1921317522, guid: dc40e8ea6e85c844ebbd4467ae55b2ba, type: 3}
   Hsupp: 1
   HDam: 0
   Psupp: 0

@@ -9,6 +9,7 @@ public class PerryPlayer : MonoBehaviour
     [SerializeField] public float MaxHealth = 125;
     [SerializeField] public float PerryShield = 0f;
     [SerializeField] public float ShieldProtects = 20f;
+    [SerializeField] public SpriteRenderer PerrySprite;
     public bool canDamageP = true;
 
     public bool MaskFlipConsentP = false;
