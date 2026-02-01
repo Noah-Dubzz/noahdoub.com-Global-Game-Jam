@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PowerUpManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PowerUpManager : MonoBehaviour
     public static PowerUpManager Instance;
 
     GameObject puOne, puTwo;
+    
 
     List<PowerUpsSO> alreadySelectedPU = new List<PowerUpsSO>();
 
@@ -71,6 +73,8 @@ public class PowerUpManager : MonoBehaviour
 
         puOne = InstantiatePU(selectedPUs[0], puPositionOne);
         puTwo = InstantiatePU(selectedPUs[1], puPositionTwo);
+        var eventsystem = EventSystem.current;
+        eventsystem.SetSelectedGameObject(puOne);
     }
     GameObject InstantiatePU(PowerUpsSO puSO, Transform position)
     {
