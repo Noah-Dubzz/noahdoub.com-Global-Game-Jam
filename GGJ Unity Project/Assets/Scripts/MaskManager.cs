@@ -48,9 +48,11 @@ public class MaskManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (harleyPlayer == null && perryPlayer == null)
+        if (harleyPlayer == null || perryPlayer == null)
         {
             // No players in the scene, skip Update logic
+            harleyPlayer = FindAnyObjectByType<HarleyPlayer>();
+            perryPlayer = FindAnyObjectByType<PerryPlayer>();
             return;
         }
 

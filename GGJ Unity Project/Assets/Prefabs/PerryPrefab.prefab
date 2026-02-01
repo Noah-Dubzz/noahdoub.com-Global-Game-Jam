@@ -388,6 +388,7 @@ GameObject:
   - component: {fileID: 3460974249289048023}
   - component: {fileID: -1232152298516613003}
   - component: {fileID: 353479252835293188}
+  - component: {fileID: 8632919755173372442}
   m_Layer: 7
   m_Name: PerryPrefab
   m_TagString: Player
@@ -663,7 +664,6 @@ MonoBehaviour:
   sharp: {fileID: 3076171300312137155}
   faceAttack: {fileID: 2246251210965181353}
   faceMove: {fileID: 8761410226198074842}
-  HealthRegen: 5
   TickInterval: 5
   Duration: 5
   speed: 5
@@ -697,6 +697,7 @@ MonoBehaviour:
   Paura: {fileID: 3186788497754255316}
   Supp: {fileID: 2100000, guid: 82a9e13242de07344a42465f6078a4a6, type: 2}
   Dammage: {fileID: 2100000, guid: 2e71acf0bdcba2744bec010224dc9e34, type: 2}
+  ownedCards: []
 --- !u!212 &353479252835293188
 SpriteRenderer:
   serializedVersion: 2
@@ -756,3 +757,16 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &8632919755173372442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8816060740330628025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68c784f0130ed0e42aba23b74b3de3bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerryDamageManager
+  meleeInvulnerabilityTime: 1

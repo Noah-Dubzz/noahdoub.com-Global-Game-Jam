@@ -9,6 +9,9 @@ public class Enemy1 : MonoBehaviour
     public float speed = 10f;
     public float health = 100f;
     private Rigidbody _rb;
+    [SerializeField] private SpriteRenderer face;
+    [SerializeField]private Sprite attack;
+    [SerializeField] private Sprite targeting;
     
     private PerryDamageManager _perryManager;
     private HarleyDamageManager _harleyManager;
@@ -62,6 +65,7 @@ public class Enemy1 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        face.sprite = attack;
         if (other.gameObject.CompareTag("Slash"))
         {
             takeDamage(HarleyPlayer.Instance.Damage);
@@ -75,6 +79,7 @@ public class Enemy1 : MonoBehaviour
     void takeDamage(float damage)
     {
         health -= damage;
+        face.sprite = targeting;
         if (health <= 0f)
         {
             Destroy(gameObject);

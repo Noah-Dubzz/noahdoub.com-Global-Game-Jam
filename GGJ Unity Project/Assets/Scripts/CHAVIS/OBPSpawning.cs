@@ -96,8 +96,10 @@ public class OBPSpawning : MonoBehaviour
             {
                 //Debug.Log("You survived every wave!");
                 //SceneManager.LoadScene("Win");
+                
                 Debug.Log("WAVE FINISHED");
                 _isRunning = false;
+                InGameMenus.Instance.ChangeState(InGameMenus.GameState.PowerUpSelection);
                 return;
             }
 
@@ -140,6 +142,7 @@ public class OBPSpawning : MonoBehaviour
 
     public void PrepareWave()
     {
+        _isRunning = true;
         _enemiesLeftToKill = enemiesThisWave;
         PrewarmPools();
     }

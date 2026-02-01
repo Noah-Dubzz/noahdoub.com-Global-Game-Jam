@@ -386,6 +386,7 @@ GameObject:
   - component: {fileID: 3460974249289048023}
   - component: {fileID: 713658127852056952}
   - component: {fileID: 3728059656130226667}
+  - component: {fileID: 8237445124431275150}
   m_Layer: 6
   m_Name: HarleyPrefab
   m_TagString: Player
@@ -661,7 +662,6 @@ MonoBehaviour:
   sharp: {fileID: 7562016505339616057}
   faceAttack: {fileID: 1955569768677450705}
   faceMove: {fileID: 6568639797677325268}
-  HealthRegen: 5
   TickInterval: 2
   Duration: 4
   speed: 5
@@ -687,6 +687,8 @@ MonoBehaviour:
   shieldHealth: 0
   MaxHealth: 100
   Damage: 5
+  DashDamage: 3
+  HealthRegen: 5
   HarleyShield: 0
   canDamageH: 0
   HarleySprite: {fileID: 3728059656130226667}
@@ -694,6 +696,7 @@ MonoBehaviour:
   Supp: {fileID: 2100000, guid: 82a9e13242de07344a42465f6078a4a6, type: 2}
   Dammage: {fileID: 2100000, guid: 2e71acf0bdcba2744bec010224dc9e34, type: 2}
   MaskFlipConsentH: 0
+  ownedCards: []
 --- !u!212 &3728059656130226667
 SpriteRenderer:
   serializedVersion: 2
@@ -753,3 +756,16 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &8237445124431275150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8816060740330628025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe77ed433484823b1aa7ed0b0d55415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HarleyDamageManager
+  meleeInvulnerabilityTime: 1

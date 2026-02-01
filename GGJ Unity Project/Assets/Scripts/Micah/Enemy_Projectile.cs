@@ -15,7 +15,9 @@ public class Enemy_Projectile : MonoBehaviour
     private float _nextFireTime;
     private bool _isMoving = true;
     private Rigidbody _rb;
-    
+    [SerializeField] private SpriteRenderer spritey;
+    [SerializeField] private Sprite attacking;
+    [SerializeField] private Sprite following;
     private PerryDamageManager _perryManager;
     private HarleyDamageManager _harleyManager;
 
@@ -66,6 +68,7 @@ public class Enemy_Projectile : MonoBehaviour
 
     void FindTargetPlayer()
     {
+        spritey.sprite = following;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         if (players == null || players.Length == 0)
         {
@@ -87,6 +90,7 @@ public class Enemy_Projectile : MonoBehaviour
 
     void Fire()
     {
+        spritey.sprite = attacking;
         if (bulletObjPool.Instance != null && targetPlayer != null)
         {
             GameObject bullet = bulletObjPool.Instance.GetBullet(this.transform.position, this.transform.rotation);
