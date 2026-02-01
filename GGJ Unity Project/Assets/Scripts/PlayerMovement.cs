@@ -301,49 +301,35 @@ public class PlayerMovement : MonoBehaviour
         }
         while ( Duration * Time.deltaTime> 0)
         {
-            if (harley != null && ticks < 7 && harley.Health < harley.MaxHealth)
+            if ((harley != null && ticks < 7 && harley.Health < harley.MaxHealth) || (perry != null && ticks < 7 && perry.Health < perry.MaxHealth))
             {
                 harley.Health += regen;
+                perry.Health += regen;
                 yield return new WaitForSeconds(TickInterval);
                 ticks++;
             }
-            else if (harley != null && harley.Health > harley.MaxHealth)
+            if (harley != null && harley.Health > harley.MaxHealth)
             {
                 harley.Health = harley.MaxHealth;
                 Debug.Log("break at - Harley: + " + harley.Health);
                 break;
             }
-            else
-            {
-                break;
-            }
-
-            if (perry != null && ticks < 7 && perry.Health < perry.MaxHealth)
-            {
-                perry.Health += regen;
-                yield return new WaitForSeconds(TickInterval);
-                Debug.Log("perry: + " + perry.Health);
-                ticks++;
-            }
-            else if (perry != null && perry.Health > perry.MaxHealth)
+            if (perry != null && perry.Health > perry.MaxHealth)
             {
                 perry.Health = perry.MaxHealth;
                 Debug.Log("break at - perry: + " + perry.Health);
                 break;
             }
-            else 
-            {
-                break;
-            }
+
             if (HealthBarController.Instance != null)
             {
                 HealthBarController.Instance.UpdateHealthBar(0);
                 HealthBarController.Instance.UpdateHealthBar(1);
             }
         }
-        yield return new WaitForSeconds(TickInterval); //Why?
+
         yield return new WaitForSeconds(HealCD);
-        canHeal = true; //Why?
+        canHeal = true;
     }
     public void ApplyPU(PowerUpsSO powerUp)
     {
