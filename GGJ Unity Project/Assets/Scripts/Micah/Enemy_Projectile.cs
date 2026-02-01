@@ -110,7 +110,7 @@ public class Enemy_Projectile : MonoBehaviour
         if (players.Length == 1)
         {
             targetPlayer = players[0];
-            Debug.Log(targetPlayer.name);
+            //Debug.Log(targetPlayer.name);
             return;
         }
 

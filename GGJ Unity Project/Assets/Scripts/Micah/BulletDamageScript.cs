@@ -44,7 +44,8 @@ public class BulletDamageScript : MonoBehaviour
             _perryDamageManager?.BulletDamage(_damage);
         }
 
-        gameObject.SetActive(false);
+        bulletObjPool.Instance.ReturnBullet(gameObject);
+        //gameObject.SetActive(false);
         // Destroy(gameObject);
     }
 }

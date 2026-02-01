@@ -101,9 +101,9 @@ MonoBehaviour:
   health: 15
   innerThreshold: 10
   outerThreshold: 12
-  fireRate: 0.15
+  fireRate: 0.4
   bulletSpeed: 20
-  bulletDamage: 5
+  bulletDamage: 3
   spritey: {fileID: 2216365564984700322}
   attacking: {fileID: 21300000, guid: c61d55da3a18b0a4391b6f3ec13daaca, type: 3}
   following: {fileID: 21300000, guid: f247b41f632bcf74584c1ca8f26a76c3, type: 3}
