@@ -1,3 +1,4 @@
+using CHAVIS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 rollDirection;
     private Vector2 AimInput;
 
-
+    public static PlayerMovement Instance;
 
 
     //public Animator animator;
@@ -56,14 +57,12 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        Instance = this;
         controller = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
 
         sharp.GetComponent<Collider>();
         this.enabled = true;
-         
-
-
     }
 
   
@@ -256,10 +255,10 @@ public class PlayerMovement : MonoBehaviour
         int ticks = 0;
         while ( Duration * Time.deltaTime> 0)
         {
-            if (ticks < 7 && Harley.Health < Harley.MaxHealth)
+            if (ticks < 7 && HarleyPlayer.Instance.Health < HarleyPlayer.Instance.MaxHealth)
             {
                 
-                Harley.Health += HarleyPlayer.Instance.HealthRegen;
+                HarleyPlayer. Instance.Health += HarleyPlayer.Instance.HealthRegen;
                 yield return new WaitForSeconds(TickInterval);
                 ticks++;
                 
@@ -299,5 +298,27 @@ public class PlayerMovement : MonoBehaviour
         }
         yield return new WaitForSeconds(TickInterval);
         canDash = true;
+    }
+    public void ApplyPU(PowerUpsSO powerUp)
+    {
+
+        if (powerUp.powerUpEffect == PowerUpEffect.DashDamageIncrease)
+        {
+            HarleyPlayer.Instance.DashDamage += powerUp.effectValue1;
+        }
+        else if (powerUp.powerUpEffect == PowerUpEffect.HealthRegenIncrease)
+        {
+            HarleyPlayer.Instance.HealthRegen += powerUp.effectValue1;
+        }
+        else if (powerUp.powerUpEffect == PowerUpEffect.ShieldHealthIncrease)
+        {
+            PerryPlayer.Instance.shieldHealth += powerUp.effectValue1;
+            HarleyPlayer.Instance.shieldHealth += powerUp.effectValue1;
+        }
+        else if (powerUp.powerUpEffect == PowerUpEffect.TauntDamageIncrease)
+        {
+
+        }
+        
     }
 }

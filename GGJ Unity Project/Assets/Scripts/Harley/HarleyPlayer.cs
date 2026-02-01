@@ -76,10 +76,7 @@ public class HarleyPlayer : MonoBehaviour
             if(MaskManager.Instance.Hsupp)
             {
                 canDamageH = false;
-            }
-            
+            }       
         }
-    }
-
-    
+    }    
 }
