@@ -21,7 +21,21 @@ public class MaskManager : MonoBehaviour
     private void Awake()
     {
        Instance = this;
-        
+        harleyPlayer = FindAnyObjectByType<HarleyPlayer>();
+        perryPlayer = FindAnyObjectByType<PerryPlayer>();
+
+        if (harleyPlayer == null && perryPlayer == null)
+        {
+            Debug.LogWarning("No players found in the scene. The game will run without players.");
+        }
+        else if (harleyPlayer == null)
+        {
+            Debug.LogWarning("HarleyPlayer is not found in the scene. Only PerryPlayer is available.");
+        }
+        else if (perryPlayer == null)
+        {
+            Debug.LogWarning("PerryPlayer is not found in the scene. Only HarleyPlayer is available.");
+        }
     }
     void Start()
     {
@@ -34,45 +48,59 @@ public class MaskManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        harleyPlayer = FindAnyObjectByType<HarleyPlayer>();
-        perryPlayer = FindAnyObjectByType<PerryPlayer>();
+        if (harleyPlayer == null && perryPlayer == null)
+        {
+            // No players in the scene, skip Update logic
+            return;
+        }
 
-        
         MaskFlipper();
     }
 
     public void MaskFlipper()
     {
-        
-        if(harleyPlayer.MaskFlipConsentH  == true && perryPlayer.MaskFlipConsentP == true)
+        if (harleyPlayer != null && perryPlayer != null)
         {
-            Debug.Log("both are true");
-            canflip = true;
-
-            if( Hsupp && Pdam && canflip)
+            if (harleyPlayer.MaskFlipConsentH && perryPlayer.MaskFlipConsentP)
             {
-                Hsupp = false;
-                Pdam = false;
-                HDam = true;
-                Psupp = true;
-                HarleyDamage();
-                PerrySupport();
-                canflip = false;
-               
-            }
+                Debug.Log("both are true");
+                canflip = true;
 
-            if (HDam && Psupp && canflip)
-            {
-                Hsupp = true;
-                Pdam = true;
-                HDam = false;
-                Psupp = false;
-                HarleySupport();
-                PerryDamage();
-                canflip = false;
+                if (Hsupp && Pdam && canflip)
+                {
+                    Hsupp = false;
+                    Pdam = false;
+                    HDam = true;
+                    Psupp = true;
+                    HarleyDamage();
+                    PerrySupport();
+                    canflip = false;
+                }
+
+                if (HDam && Psupp && canflip)
+                {
+                    Hsupp = true;
+                    Pdam = true;
+                    HDam = false;
+                    Psupp = false;
+                    HarleySupport();
+                    PerryDamage();
+                    canflip = false;
+                }
+
+                harleyPlayer.MaskFlipConsentH = false;
+                perryPlayer.MaskFlipConsentP = false;
             }
-            harleyPlayer.MaskFlipConsentH = false;
-            perryPlayer.MaskFlipConsentP = false;
+        }
+        else if (harleyPlayer != null)
+        {
+            Debug.Log("Only HarleyPlayer is present. Skipping PerryPlayer logic.");
+            // Handle HarleyPlayer-specific logic if needed
+        }
+        else if (perryPlayer != null)
+        {
+            Debug.Log("Only PerryPlayer is present. Skipping HarleyPlayer logic.");
+            // Handle PerryPlayer-specific logic if needed
         }
     }
 
@@ -80,6 +108,12 @@ public class MaskManager : MonoBehaviour
 
     public void HarleySupport()
     {
+        if (HarleyPlayer.Instance == null || HarleyPlayer.Instance.HarleySprite == null)
+        {
+            Debug.LogError("HarleyPlayer instance or HarleySprite is not assigned.");
+            return;
+        }
+
         Debug.Log("Harley is in support Mode");
         HarleyPlayer.Instance.HarleySprite.sprite = Harleysupp;
 
@@ -87,6 +121,12 @@ public class MaskManager : MonoBehaviour
 
     public void HarleyDamage()
     {
+        if (HarleyPlayer.Instance == null || HarleyPlayer.Instance.HarleySprite == null)
+        {
+            Debug.LogError("HarleyPlayer instance or HarleySprite is not assigned.");
+            return;
+        }
+
         Debug.Log("Harley is in Damage Mode");
         HarleyPlayer.Instance.HarleySprite.sprite = HarleyDam;
 
@@ -94,11 +134,23 @@ public class MaskManager : MonoBehaviour
 
     public void PerrySupport()
     {
-        Debug.Log("perry is in support Mode");
+        if (PerryPlayer.Instance == null || PerryPlayer.Instance.PerrySprite == null)
+        {
+            Debug.LogError("PerryPlayer instance or PerrySprite is not assigned.");
+            return;
+        }
+
+        Debug.Log("Perry is in support Mode");
         PerryPlayer.Instance.PerrySprite.sprite = Perrysupp;
     }
     public void PerryDamage()
     {
+        if (PerryPlayer.Instance == null || PerryPlayer.Instance.PerrySprite == null)
+        {
+            Debug.LogError("PerryPlayer instance or PerrySprite is not assigned.");
+            return;
+        }
+
         Debug.Log("Perry is in damage mode");
          PerryPlayer.Instance.PerrySprite.sprite = PerryDam;
 

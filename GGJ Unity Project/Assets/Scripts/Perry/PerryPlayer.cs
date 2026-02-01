@@ -1,6 +1,8 @@
 using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Game.Cards;
 
 public class PerryPlayer : MonoBehaviour
 {
@@ -20,6 +22,37 @@ public class PerryPlayer : MonoBehaviour
 
     [SerializeField] private Material Supp;
     [SerializeField] private Material Dammage;
+
+    public List<Card> ownedCards = new List<Card>();
+
+    // Add a card to Perry and apply its effects
+    public void AddCard(Card card)
+    {
+        if (card == null) return;
+        if (!ownedCards.Contains(card))
+        {
+            ownedCards.Add(card);
+            ApplyCardEffect(card);
+            Debug.Log($"Card {card.cardName} added to Perry.");
+        }
+    }
+
+    // Remove the effects of a card
+    public void RemoveCardEffect(Card card)
+    {
+        if (card == null) return;
+        Health -= card.damageBoost;
+        MaxHealth -= Mathf.Round(card.rangeBoost);
+        Debug.Log($"Removed card effect: {card.cardName}");
+    }
+
+    private void ApplyCardEffect(Card card)
+    {
+        if (card == null) return;
+        Health += card.damageBoost;
+        MaxHealth += Mathf.Round(card.rangeBoost);
+        Debug.Log($"Applied card effect: {card.cardName}");
+    }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
