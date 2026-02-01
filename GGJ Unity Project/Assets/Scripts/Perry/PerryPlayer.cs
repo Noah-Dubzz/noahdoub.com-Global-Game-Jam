@@ -7,6 +7,7 @@ public class PerryPlayer : MonoBehaviour
 {
     public float Health;
     public float shieldHealth;
+    public float tauntDamBuff;
     [SerializeField] public float Damage = 5f;
     [SerializeField] public float MaxHealth = 125;
     [SerializeField] public float PerryShield = 0f;

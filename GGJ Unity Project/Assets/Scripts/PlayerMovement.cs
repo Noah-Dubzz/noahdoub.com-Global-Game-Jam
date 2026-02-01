@@ -129,8 +129,10 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator ActivateTaunt()
     {
         canTaunt = false;
+        PerryPlayer.Instance.Damage += PerryPlayer.Instance.tauntDamBuff;
         taunty.ActivateTaunt();
         yield return new WaitForSeconds(TauntCD);
+        PerryPlayer.Instance.Damage -= PerryPlayer.Instance.tauntDamBuff;
     }
 
     public IEnumerator Shield()
@@ -277,14 +279,14 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(HealthTickH());
         }
 
-        /*if (perry != null && perry.Health >= perry.MaxHealth)
+        if (perry != null && perry.Health >= perry.MaxHealth)
         {
             perry.Health = perry.MaxHealth;
         }
         if (harley != null && harley.Health >= harley.MaxHealth)
         {
             harley.Health = harley.MaxHealth;
-        }*/
+        }
 
     }
     private IEnumerator HealthTickH()
@@ -336,19 +338,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (powerUp.powerUpEffect == PowerUpEffect.DashDamageIncrease)
         {
-
+            HarleyPlayer.Instance.DashDamage += powerUp.effectValue1;
         }
         if (powerUp.powerUpEffect == PowerUpEffect.TauntDamageIncrease)
         {
-
+            
         }
         if (powerUp.powerUpEffect == PowerUpEffect.ShieldHealthIncrease)
         {
-
+            PerryPlayer.Instance.shieldHealth += powerUp.effectValue1;
+            HarleyPlayer.Instance.shieldHealth += powerUp.effectValue1;
         }
         if (powerUp.powerUpEffect == PowerUpEffect.HealthRegenIncrease)
         {
-
+            HarleyPlayer.Instance.HealthRegen += powerUp.effectValue1;
         }
     }
  }

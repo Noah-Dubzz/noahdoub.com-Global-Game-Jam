@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec9284586f64b4aa9fd70e0cb92bcf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Micah.MeleeDamageScript
-  damage: 10
+  damage: 3
 --- !u!114 &-356262173419658175
 MonoBehaviour:
   m_ObjectHideFlags: 0
