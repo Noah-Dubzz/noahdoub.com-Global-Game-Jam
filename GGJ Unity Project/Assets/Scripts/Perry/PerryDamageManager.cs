@@ -1,4 +1,4 @@
-using TMPro.EditorUtilities;
+
 using UnityEngine;
 
 public class PerryDamageManager : MonoBehaviour
@@ -8,6 +8,7 @@ public class PerryDamageManager : MonoBehaviour
     public float meleeInvulnerabilityTime = 1f;
     private PerryPlayer _perryPlayer = null;
     private float _invulTimer = 0f;
+    private bool _isInvul = false;
 
     private Renderer _renderer;
     private Material _perryMat;
@@ -25,22 +26,43 @@ public class PerryDamageManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_invulTimer <= Time.time)
+        if (_isInvul)
         {
-            _perryMat.color = _basicColor;
-                
+            if (_invulTimer <= Time.time)
+            {
+                _renderer.enabled = true;
+                _isInvul = false;
+                _perryMat.color = _basicColor;
+            }
+            else if(Time.time -(_invulTimer - meleeInvulnerabilityTime) > 0.25f)
+            {
+                _perryMat.color = _basicColor;
+                _renderer.enabled = (Time.time % 0.5f) < 0.4f;
+            }
         }
     }
     
     public void MeleeDamage(float damage)
     {
-        
-        
-        if (Time.time >= _invulTimer)
+        if (Time.time >= _invulTimer && !_isInvul)
         {
-            _perryPlayer.Health -= damage;
-            _invulTimer = Time.time + meleeInvulnerabilityTime;
-            _perryMat.color = Color.red;
+            if (PerryPlayer.Instance.PerryShield > 0 && PerryPlayer.Instance.Paura.enabled)
+            {
+                PerryPlayer.Instance.PerryShield -= damage;
+            }
+            if (PerryPlayer.Instance.PerryShield < 0 && PerryPlayer.Instance.Paura.enabled)
+            {
+                _perryPlayer.Health -= PerryPlayer.Instance.PerryShield;
+                PerryPlayer.Instance.PerryShield = 0;
+                PerryPlayer.Instance.Paura.enabled = false;
+            }
+            if (PerryPlayer.Instance.Paura.enabled == false)
+            {
+                _perryPlayer.Health -= damage;
+                _invulTimer = Time.time + meleeInvulnerabilityTime;
+                _perryMat.color = Color.red;
+                _isInvul = true;
+            }
             
             Debug.Log(_perryPlayer.Health);
         }
@@ -49,7 +71,20 @@ public class PerryDamageManager : MonoBehaviour
     
     public void BulletDamage(float damage)
     {
-        _perryPlayer.Health -= damage;
-        //Debug.Log(_perryPlayer.Health);
+        if (PerryPlayer.Instance.PerryShield > 0 && PerryPlayer.Instance.Paura.enabled)
+        {
+            PerryPlayer.Instance.PerryShield -= damage;
+        }
+        if (PerryPlayer.Instance.PerryShield < 0 && PerryPlayer.Instance.Paura.enabled)
+        {
+            _perryPlayer.Health -= PerryPlayer.Instance.PerryShield;
+            PerryPlayer.Instance.PerryShield  = 0;
+            PerryPlayer.Instance.Paura.enabled = false;
+        }
+        if (PerryPlayer.Instance.Paura.enabled == false)
+        {
+            _perryPlayer.Health -= damage;
+            //Debug.Log(_perryPlayer.Health);
+        }
     }
 }

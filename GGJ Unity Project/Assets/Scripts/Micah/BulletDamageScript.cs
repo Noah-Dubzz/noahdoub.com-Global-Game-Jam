@@ -1,4 +1,5 @@
 using System;
+using Micah;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class BulletDamageScript : MonoBehaviour
     
     private int _perryLayer;
     private int _harleyLayer;
+    
 
     void Awake()
     {
@@ -42,6 +44,7 @@ public class BulletDamageScript : MonoBehaviour
             _perryDamageManager?.BulletDamage(_damage);
         }
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        // Destroy(gameObject);
     }
 }

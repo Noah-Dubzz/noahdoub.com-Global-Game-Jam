@@ -1,110 +1,181 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CHAVIS
 {
     public class WaveSpawner : MonoBehaviour
     {
-        [SerializeField] private float countdown = 5f;
-        [SerializeField] private List<GameObject> spawnPoints = new List<GameObject>();
-        [SerializeField] private int extraEnemiesPerWave = 1; // how many extra enemies each subsequent wave gets
+        [SerializeField] private float countdown;
+        [SerializeField] private List<GameObject> spawnPoints;
+        [SerializeField] private Transform spawnPointRoot;
+
 
         public PowerUpManager powerUpManager;
-        public Wave[] waves;
 
-        // Wave counter (starts at 1). Allows infinite progression by cycling templates.
-        public int currentWaveNumber = 1;
+        public Wave[] waves;
+        public int currentWaveIndex = 0;
 
         private bool readyToCountDown;
-        public float enemyInsetDefault = 1.5f;
+        private bool loggedMissingConfig;
 
+        public float enemyInsetDefault = 1.5f;
+        private void Awake()
+        {
+            
+        }
         private void Start()
         {
             readyToCountDown = true;
 
-            if (waves != null && waves.Length > 0)
-            {
-                // ensure templates have a sensible initial enemiesLeft (not used for spawn count directly)
-                for (int i = 0; i < waves.Length; i++)
-                {
-                    waves[i].enemiesLeft = waves[i].enemies != null ? waves[i].enemies.Length : 0;
-                }
+            InitializeSpawnPoints();
 
-                // if countdown hasn't been configured in inspector, use first wave's time
-                if (countdown <= 0f)
-                    countdown = waves[0].timeToNextWave;
-            }
-            else
+            if (waves == null || waves.Length == 0)
             {
-                Debug.LogWarning("WaveSpawner: No waves defined.");
+                LogMissingConfig("No waves are assigned to WaveSpawner.");
+                return;
+            }
+
+            for (int i = 0; i < waves.Length; i++)
+            {
+                waves[i].enemiesLeft = waves[i].enemies != null ? waves[i].enemies.Length : 0;
+            }
+
+            if (countdown <= 0f)
+            {
+                countdown = waves[currentWaveIndex].timeToNextWave;
             }
         }
-
         private void Update()
         {
-            if (waves == null || waves.Length == 0) return;
-
-            if (readyToCountDown)
-                countdown -= Time.deltaTime;
-
-            if (countdown <= 0f && !readyToCountDown)
+            if (waves == null || waves.Length == 0)
             {
-                // start spawning the current wave
-                readyToCountDown = false;
-                var template = waves[(currentWaveNumber - 1) % waves.Length];
-                countdown = template.timeToNextWave;
-                StartCoroutine(SpawnWave());
+                LogMissingConfig("No waves are assigned to WaveSpawner.");
+                return;
             }
 
-            // If current template's enemiesLeft reaches zero, end the wave and prepare next (infinite allowed)
-            var currentTemplate = waves[(currentWaveNumber - 1) % waves.Length];
-            if (currentTemplate.enemiesLeft <= 0)
+            if (currentWaveIndex >= waves.Length)
+            {
+                //Debug.Log("You survived every wave!");
+                return;
+            }
+
+            if (readyToCountDown == true)
+            {
+                countdown -= Time.deltaTime;
+            }
+
+            if (countdown <= 0)
+            {
+                readyToCountDown = false;
+
+                countdown = waves[currentWaveIndex].timeToNextWave;
+
+                if (spawnPoints != null && spawnPoints.Count > 0 && waves[currentWaveIndex].enemiesLeft > 0)
+                {
+                    StartCoroutine(SpawnWave());
+                }
+                else if (spawnPoints == null || spawnPoints.Count == 0)
+                {
+                    LogMissingConfig("No spawn points are assigned to WaveSpawner.");
+                }
+            }
+
+            if (waves[currentWaveIndex].enemiesLeft <= 0)
             {
                 WaveEnd();
                 readyToCountDown = true;
-                currentWaveNumber++;
+
+                currentWaveIndex += 1;
             }
         }
-
         private IEnumerator SpawnWave()
         {
-            var template = waves[(currentWaveNumber - 1) % waves.Length];
-            if (template.enemies == null || template.enemies.Length == 0)
+            if (spawnPoints == null || spawnPoints.Count == 0)
             {
-                Debug.LogWarning("WaveSpawner: Wave template has no enemy prefabs.");
                 yield break;
             }
 
-            int baseCount = template.enemies.Length;
-            int spawnCount = baseCount + (currentWaveNumber - 1) * extraEnemiesPerWave;
-            template.enemiesLeft = spawnCount; // set how many enemies this wave expects
-
-            int spCount = spawnPoints != null ? spawnPoints.Count : 0;
-            if (spCount == 0)
+            int x = spawnPoints.Count;
+            if (currentWaveIndex < waves.Length)
             {
-                Debug.LogWarning("WaveSpawner: No spawn points assigned.");
-                yield break;
-            }
+                var enemies = waves[currentWaveIndex].enemies;
+                if (enemies == null || enemies.Length == 0)
+                {
+                    LogMissingConfig("Wave has no enemies assigned.");
+                    yield break;
+                }
 
-            for (int i = 0; i < spawnCount; i++)
-            {
-                var spawnPoint = spawnPoints[Random.Range(0, spCount)];
-                var enemyPrefab = template.enemies[Random.Range(0, template.enemies.Length)];
-                // Instantiate at spawn point world position; set parent for organization
-                var enemy = Instantiate(enemyPrefab, spawnPoint.transform.position, Quaternion.identity);
-                enemy.transform.SetParent(spawnPoint.transform);
+                for (int i = 0; i < enemies.Length; i++)
+                {
+                    GameObject spawnPoint = spawnPoints[Random.Range(0, x)];
+                    if (spawnPoint == null || enemies[i] == null)
+                    {
+                        continue;
+                    }
 
-                yield return new WaitForSeconds(template.timeToNextEnemy);
+                    GameObject enemy = Instantiate(enemies[i], spawnPoint.transform);
+
+                    enemy.transform.SetParent(spawnPoint.transform);
+
+                    yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
+                }
             }
         }
-
         public void WaveEnd()
         {
+
             Time.timeScale = 0f;
-            powerUpManager?.RandomizeNewPowerUps();
-            InGameMenus.Instance.ChangeState(InGameMenus.GameState.PowerUpSelection);
+            if (powerUpManager != null)
+            {
+                powerUpManager.RandomizeNewPowerUps();
+            }
+            if (InGameMenus.Instance != null)
+            {
+                InGameMenus.Instance.ChangeState(InGameMenus.GameState.PowerUpSelection);
+            }
+
         }
+
+        private void InitializeSpawnPoints()
+        {
+            if (spawnPoints == null)
+            {
+                spawnPoints = new List<GameObject>();
+            }
+
+            spawnPoints.RemoveAll(point => point == null);
+
+            if (spawnPoints.Count > 0)
+            {
+                return;
+            }
+
+            Transform root = spawnPointRoot != null ? spawnPointRoot : transform;
+            Transform[] children = root.GetComponentsInChildren<Transform>(true);
+            for (int i = 0; i < children.Length; i++)
+            {
+                if (children[i] != root)
+                {
+                    spawnPoints.Add(children[i].gameObject);
+                }
+            }
+
+            spawnPoints.RemoveAll(point => point == null);
+        }
+
+        private void LogMissingConfig(string message)
+        {
+            if (loggedMissingConfig)
+            {
+                return;
+            }
+
+            loggedMissingConfig = true;
+            Debug.LogWarning(message, this);
+        }
+
     }
 
     [System.Serializable]

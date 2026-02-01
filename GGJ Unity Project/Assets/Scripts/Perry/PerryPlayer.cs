@@ -1,23 +1,34 @@
 using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PerryPlayer : MonoBehaviour
 {
     public float Health;
-    [SerializeField] private float Damage = 5f;
+    public float shieldHealth;
+    [SerializeField] public float Damage = 5f;
     [SerializeField] public float MaxHealth = 125;
-   
-    public bool MaskFlipConsentP = false;
-    
-    public static PerryPlayer Instance;
+    [SerializeField] public float PerryShield = 0f;
+    [SerializeField] public float ShieldProtects = 20f;
+    [SerializeField] public SpriteRenderer PerrySprite;
+    public bool canDamageP = true;
 
-    
+    public bool MaskFlipConsentP = false;
+
+    public static PerryPlayer Instance;
+    [SerializeField] public MeshRenderer Paura;
+
+    [SerializeField] private Material Supp;
+    [SerializeField] private Material Dammage;
+
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
         Instance = this;
-        Health = 10;
+        Health = MaxHealth;
         
     }
     void Start()
@@ -28,7 +39,24 @@ public class PerryPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        if (PerryShield > 0)
+        {
+            Paura.enabled = true;
+
+
+        }
         
+
+        if (MaskManager.Instance.Pdam)
+        {
+            Paura.material = Dammage;
+        }
+        if (MaskManager.Instance.Psupp)
+        {
+            Paura.material = Supp;
+        }
     }
 
     public void MaskFlip(InputAction.CallbackContext context)
@@ -37,6 +65,14 @@ public class PerryPlayer : MonoBehaviour
         {
             MaskFlipConsentP = true;
             Debug.Log("Perry has consented for a mask switch");
+            if (MaskManager.Instance.HDam)
+            {
+                canDamageP = true;
+            }
+            if (MaskManager.Instance.Hsupp)
+            {
+                canDamageP = false;
+            }
 
         }
     }

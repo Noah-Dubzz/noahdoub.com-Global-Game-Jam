@@ -1,19 +1,49 @@
 using UnityEngine;
+using Micah;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy_Projectile : MonoBehaviour
 {
     public GameObject targetPlayer = null;
     public float speed = 10f;
+    public float health = 100f;
     public float innerThreshold = 5f;
     public float outerThreshold = 10f;
-    private bool isMoving = true;
-    private Rigidbody rb;
+    public float fireRate = 0.5f;
+    public float bulletSpeed = 20f;
+    public float bulletDamage = 5f;
+    private float _nextFireTime;
+    private bool _isMoving = true;
+    private Rigidbody _rb;
+    private ObjectPool _objectPool;
+    private float _maxHealth;
+    
+    [SerializeField] private SpriteRenderer spritey;
+    [SerializeField] private Sprite attacking;
+    [SerializeField] private Sprite following;
+    
+    private PerryDamageManager _perryManager;
+    private HarleyDamageManager _harleyManager;
+
+    void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+        _objectPool = GetComponent<ObjectPool>();
+        _maxHealth = health;
+    }
+
+    void OnEnable()
+    {
+        health = _maxHealth;
+        _isMoving = true;
+        FindTargetPlayer(false);
+    }
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        FindTargetPlayer();
+        _perryManager = FindAnyObjectByType<PerryDamageManager>();
+        _harleyManager = FindAnyObjectByType<HarleyDamageManager>();
     }
 
     void FixedUpdate()
@@ -22,44 +52,126 @@ public class Enemy_Projectile : MonoBehaviour
         {
             float distance = Vector3.Distance(transform.position, targetPlayer.transform.position);
 
-            if (isMoving)
+            if (_isMoving)
             {
                 if (distance <= innerThreshold)
                 {
-                    isMoving = false;
-                    rb.linearVelocity = Vector3.zero;
+                    _isMoving = false;
+                    _rb.linearVelocity = Vector3.zero;
                 }
                 else
                 {
-                    rb.linearVelocity = (targetPlayer.transform.position - transform.position).normalized * speed;
+                    _rb.linearVelocity = (targetPlayer.transform.position - transform.position).normalized * speed;
                 }
             }
             else
             {
                 if (distance > outerThreshold)
                 {
-                    isMoving = true;
+                    _isMoving = true;
                 }
                 else
                 {
-                    rb.linearVelocity = Vector3.zero;
+                    _rb.linearVelocity = Vector3.zero;
+                    if (Time.time >= _nextFireTime)
+                    {
+                        Fire();
+                        _nextFireTime = Time.time + fireRate;
+                    }
                 }
             }
         }
     }
 
-    void FindTargetPlayer()
+    public void FindTargetPlayer(bool tauntForce)
     {
+        
+        spritey.sprite = following;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        if (Random.value < 0.5f)
+
+        if (tauntForce)
+        {
+            if (players[0].layer == LayerMask.NameToLayer("Perry"))
+            {
+                targetPlayer = players[0];
+            }
+            else
+            {
+                targetPlayer = players[1];
+            }
+            return;
+        }
+        if (players == null || players.Length == 0)
+        {
+            targetPlayer = null;
+            return;
+        }
+
+        if (players.Length == 1)
         {
             targetPlayer = players[0];
+            Debug.Log(targetPlayer.name);
+            return;
         }
-        else
-        {
-            targetPlayer = players[1];
-        }
-        
+
+        int index = Random.Range(0, players.Length);
+        targetPlayer = players[index];
         Debug.Log(targetPlayer.name);
     }
+
+    void Fire()
+    {
+        spritey.sprite = attacking;
+        if (bulletObjPool.Instance != null && targetPlayer != null)
+        {
+            GameObject bullet = bulletObjPool.Instance.GetBullet(this.transform.position, this.transform.rotation);
+            bullet.transform.position = transform.position;
+            bullet.transform.rotation = Quaternion.identity;
+            
+            Vector3 direction = (targetPlayer.transform.position - transform.position).normalized;
+            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+            if (bulletRb != null)
+            {
+                bulletRb.linearVelocity = direction * bulletSpeed;
+                bulletRb.angularVelocity = Vector3.zero;
+            }
+            
+            BulletDamageScript bs = bullet.GetComponent<BulletDamageScript>();
+            if (bs != null)
+            {
+                bs.Setup(_perryManager, _harleyManager, bulletDamage);
+            }
+        }
+    }
+    
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.gameObject.CompareTag("Slash"))
+        {
+            takeDamage(HarleyPlayer.Instance.Damage);
+        }
+        if (other.gameObject.CompareTag("AOE"))
+        {
+            takeDamage(PerryPlayer.Instance.Damage);
+        }
+    }
+    
+    void takeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0f)
+        {
+            if (_objectPool != null)
+            {
+                _objectPool.ReleaseObject();
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+    
 }

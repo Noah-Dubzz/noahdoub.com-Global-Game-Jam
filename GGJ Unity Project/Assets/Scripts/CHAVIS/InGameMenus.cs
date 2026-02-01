@@ -7,9 +7,9 @@ namespace CHAVIS
     public class InGameMenus : MonoBehaviour
     {
         public static InGameMenus Instance;
-        public GameObject pauseMenu;
+       // public GameObject pauseMenu;
         GameState currentState;
-        public static bool isPaused = false;
+        //public static bool isPaused = false;
         public event Action<GameState> OnStateChanged;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,13 +19,13 @@ namespace CHAVIS
         }
         void Start()
         {
-            pauseMenu.SetActive(false);
+            //pauseMenu.SetActive(false);
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            /*if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (isPaused)
                 {
@@ -35,10 +35,10 @@ namespace CHAVIS
                 {
                     PauseGame();
                 }
-            }
+            }*/
         }
 
-        public void PauseGame()
+        /*public void PauseGame()
         {
             pauseMenu.SetActive(true);
             Time.timeScale = 0f;
@@ -58,7 +58,7 @@ namespace CHAVIS
         public void QuitGame()
         {
             Application.Quit();
-        }
+        }*/
 
         public void ChangeState(GameState newState)
         {
@@ -72,6 +72,7 @@ namespace CHAVIS
             {
                 case GameState.Playing:
                     PowerUpManager.Instance.HidePUSelection();
+                    OBPSpawning.Instance.PrepareWave();
                     break;
                 case GameState.PowerUpSelection:
                     PowerUpManager.Instance.ShowPUSelection();
