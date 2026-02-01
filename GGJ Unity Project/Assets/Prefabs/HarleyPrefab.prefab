@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 713658127852056952}
   - component: {fileID: 3728059656130226667}
   - component: {fileID: 8237445124431275150}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: HarleyPrefab
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -696,7 +696,6 @@ MonoBehaviour:
   Supp: {fileID: 2100000, guid: 82a9e13242de07344a42465f6078a4a6, type: 2}
   Dammage: {fileID: 2100000, guid: 2e71acf0bdcba2744bec010224dc9e34, type: 2}
   MaskFlipConsentH: 0
-  ownedCards: []
 --- !u!212 &3728059656130226667
 SpriteRenderer:
   serializedVersion: 2

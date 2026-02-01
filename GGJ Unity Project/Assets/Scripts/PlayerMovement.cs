@@ -1,3 +1,4 @@
+using Perry;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,10 +26,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float gravity = -9.81f;
 
-   
 
 
 
+    Taunt taunty;
 
 
     [Header("Dashing")]
@@ -51,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+
     //public Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -61,8 +63,8 @@ public class PlayerMovement : MonoBehaviour
 
         sharp.GetComponent<Collider>();
         this.enabled = true;
-         
 
+        taunty = gameObject.GetComponent<Taunt>();
 
     }
 
@@ -112,7 +114,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void Taunt()
     {
-        Debug.Log("Taunting enemies");
+        Debug.Log("Perry Taunting enemies");
+        taunty.ActivateTaunt();
     }
 
     public void Shield()
