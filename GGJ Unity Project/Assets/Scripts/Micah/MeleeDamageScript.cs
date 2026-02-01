@@ -1,3 +1,4 @@
+using CHAVIS;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -34,12 +35,12 @@ namespace Micah
             if (otherLayer == _harleyLayer)
             {
                 _harleyDamageManager = FindAnyObjectByType<HarleyDamageManager>();
-                _harleyDamageManager?.MeleeDamage(damage);
+                _harleyDamageManager?.MeleeDamage(damage + InGameMenus.Instance.waveNumber);
             }
             else if (otherLayer == _perryLayer)
             {
                 _perryDamageManager = FindAnyObjectByType<PerryDamageManager>();
-                _perryDamageManager?.MeleeDamage(damage);
+                _perryDamageManager?.MeleeDamage(damage + InGameMenus.Instance.waveNumber);
             }
         }
     }

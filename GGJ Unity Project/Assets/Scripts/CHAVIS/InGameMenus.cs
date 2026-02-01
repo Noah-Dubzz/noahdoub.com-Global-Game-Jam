@@ -12,8 +12,8 @@ namespace CHAVIS
         //public static bool isPaused = false;
         public event Action<GameState> OnStateChanged;
 
-        [SerializeField] public int maxWaves = 10;
-        public int waveNumber = 1;
+        [SerializeField] public float maxWaves = 10f;
+        public float waveNumber = 0f;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Awake()
@@ -79,10 +79,11 @@ namespace CHAVIS
                     AudioManager.Instance?.PlayMenuDown();
                     break;
                 case GameState.PowerUpSelection:
-                    waveNumber++;
-                    if (waveNumber == maxWaves)
+                    waveNumber += 1f;
+                    if (waveNumber >= maxWaves)
                     {
                         SceneManager.LoadScene("rmWin");
+                        break;
                     }
                     PowerUpManager.Instance.ShowPUSelection();
                     AudioManager.Instance?.PlayPause();

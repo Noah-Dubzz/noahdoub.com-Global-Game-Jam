@@ -1,6 +1,7 @@
 using UnityEngine;
 using Micah;
 using Unity.VisualScripting;
+using CHAVIS;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy_Projectile : MonoBehaviour
@@ -140,7 +141,7 @@ public class Enemy_Projectile : MonoBehaviour
             BulletDamageScript bs = bullet.GetComponent<BulletDamageScript>();
             if (bs != null)
             {
-                bs.Setup(_perryManager, _harleyManager, bulletDamage);
+                bs.Setup(_perryManager, _harleyManager, bulletDamage + InGameMenus.Instance.waveNumber);
             }
         }
     }
