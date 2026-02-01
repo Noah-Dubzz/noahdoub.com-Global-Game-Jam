@@ -302,7 +302,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 break;
             }
-
+            HealthBarController.Instance.UpdateHealthBar(0);
+            HealthBarController.Instance.UpdateHealthBar(1);
         }
         yield return new WaitForSeconds(TickInterval);
         canDash = true;

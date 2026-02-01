@@ -1,4 +1,4 @@
-
+using System;
 using UnityEngine;
 
 public class PerryDamageManager : MonoBehaviour
@@ -6,7 +6,6 @@ public class PerryDamageManager : MonoBehaviour
 {
 
     public float meleeInvulnerabilityTime = 1f;
-    private PerryPlayer _perryPlayer = null;
     private float _invulTimer = 0f;
     private bool _isInvul = false;
 
@@ -17,7 +16,6 @@ public class PerryDamageManager : MonoBehaviour
     
     void Start()
     {
-        _perryPlayer = FindAnyObjectByType<PerryPlayer>();
         _renderer = GetComponentInChildren<Renderer>();
         _perryMat = _renderer.material;
         _basicColor = _perryMat.color;
@@ -49,42 +47,41 @@ public class PerryDamageManager : MonoBehaviour
             if (PerryPlayer.Instance.PerryShield > 0 && PerryPlayer.Instance.Paura.enabled)
             {
                 PerryPlayer.Instance.PerryShield -= damage;
-            }
-            if (PerryPlayer.Instance.PerryShield < 0 && PerryPlayer.Instance.Paura.enabled)
-            {
-                _perryPlayer.Health -= PerryPlayer.Instance.PerryShield;
-                PerryPlayer.Instance.PerryShield = 0;
-                PerryPlayer.Instance.Paura.enabled = false;
+                if (PerryPlayer.Instance.PerryShield <= 0)
+                {
+                    PerryPlayer.Instance.Health -= (damage - Math.Abs(PerryPlayer.Instance.PerryShield));
+                    PerryPlayer.Instance.PerryShield = 0;
+                    PerryPlayer.Instance.Paura.enabled = false;
+                }
             }
             if (PerryPlayer.Instance.Paura.enabled == false)
             {
-                _perryPlayer.Health -= damage;
+                PerryPlayer.Instance.Health -= damage;
                 _invulTimer = Time.time + meleeInvulnerabilityTime;
                 _perryMat.color = Color.red;
                 _isInvul = true;
             }
-            
-            Debug.Log(_perryPlayer.Health);
         }
-        
+        HealthBarController.Instance.UpdateHealthBar(1);
     }
     
     public void BulletDamage(float damage)
     {
-        if (PerryPlayer.Instance.PerryShield > 0 && PerryPlayer.Instance.Paura.enabled)
+        if(PerryPlayer.Instance.PerryShield > 0 && PerryPlayer.Instance.Paura.enabled)
         {
             PerryPlayer.Instance.PerryShield -= damage;
+            if (PerryPlayer.Instance.PerryShield <= 0)
+            {
+                PerryPlayer.Instance.Health -= (damage - Math.Abs(PerryPlayer.Instance.PerryShield));
+                PerryPlayer.Instance.PerryShield = 0;
+                PerryPlayer.Instance.Paura.enabled = false;
+            }
         }
-        if (PerryPlayer.Instance.PerryShield < 0 && PerryPlayer.Instance.Paura.enabled)
+        else
         {
-            _perryPlayer.Health -= PerryPlayer.Instance.PerryShield;
-            PerryPlayer.Instance.PerryShield  = 0;
-            PerryPlayer.Instance.Paura.enabled = false;
+            PerryPlayer.Instance.Health -= damage;
         }
-        if (PerryPlayer.Instance.Paura.enabled == false)
-        {
-            _perryPlayer.Health -= damage;
-            //Debug.Log(_perryPlayer.Health);
-        }
+        
+        HealthBarController.Instance.UpdateHealthBar(1);
     }
 }
