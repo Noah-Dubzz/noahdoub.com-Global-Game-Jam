@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HarleyDamageManager : MonoBehaviour
 
@@ -39,6 +40,10 @@ public class HarleyDamageManager : MonoBehaviour
                 _harleyMat.color = _basicColor;
                 _renderer.enabled = (Time.time % 0.5f) < 0.4f;
             }
+        }
+        if(HarleyPlayer.Instance.Health <= 0)
+        {
+            SceneManager.LoadScene("rmLose");
         }
     }
 

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PerryDamageManager : MonoBehaviour
 
@@ -37,6 +38,10 @@ public class PerryDamageManager : MonoBehaviour
                 _perryMat.color = _basicColor;
                 _renderer.enabled = (Time.time % 0.5f) < 0.4f;
             }
+        }
+        if (PerryPlayer.Instance.Health <= 0)
+        {
+            SceneManager.LoadScene("rmLose");
         }
     }
     
