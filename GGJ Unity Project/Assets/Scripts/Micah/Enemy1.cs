@@ -1,3 +1,4 @@
+using CHAVIS;
 using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -7,7 +8,7 @@ public class Enemy1 : MonoBehaviour
 {
     public GameObject targetPlayer = null;
     public float speed = 10f;
-    public float health = 100f;
+    public float health = 15f;
     private Rigidbody _rb;
     private ObjectPool _objectPool;
     private float _maxHealth;
@@ -27,7 +28,7 @@ public class Enemy1 : MonoBehaviour
         _perryManager = FindAnyObjectByType<PerryDamageManager>();
         _harleyManager = FindAnyObjectByType<HarleyDamageManager>();
         _objectPool = GetComponent<ObjectPool>();
-        _maxHealth = health;
+        _maxHealth = health + (InGameMenus.Instance.waveNumber * 2f);
     }
     
     void OnEnable()
@@ -115,5 +116,4 @@ public class Enemy1 : MonoBehaviour
             }
         }
     }
-    
 }

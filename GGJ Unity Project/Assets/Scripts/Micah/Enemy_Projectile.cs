@@ -31,7 +31,7 @@ public class Enemy_Projectile : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _objectPool = GetComponent<ObjectPool>();
-        _maxHealth = health;
+        _maxHealth = health + (InGameMenus.Instance.waveNumber * 2);
     }
 
     void OnEnable()
