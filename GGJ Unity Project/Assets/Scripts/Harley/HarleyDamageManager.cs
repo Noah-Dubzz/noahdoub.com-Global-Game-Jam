@@ -45,18 +45,44 @@ public class HarleyDamageManager : MonoBehaviour
     {
         if (Time.time >= _invulTimer && !_isInvul)
         {
-            _harleyPlayer.Health -= damage;
-            _invulTimer = Time.time + meleeInvulnerabilityTime;
-            _harleyMat.color = Color.red;
-            _isInvul = true;
-            
-            Debug.Log(_harleyPlayer.Health);
+            if (HarleyPlayer.Instance.HarleyShield > 0 && HarleyPlayer.Instance.Haura.enabled)
+            {
+                HarleyPlayer.Instance.HarleyShield -= damage;
+            }
+            if (HarleyPlayer.Instance.HarleyShield < 0 && HarleyPlayer.Instance.Haura.enabled)
+            {
+                _harleyPlayer.Health -= HarleyPlayer.Instance.HarleyShield;
+                HarleyPlayer.Instance.HarleyShield = 0;
+                HarleyPlayer.Instance.Haura.enabled = false;
+            }
+            if (HarleyPlayer.Instance.Haura.enabled == false)
+            {
+                _harleyPlayer.Health -= damage;
+                _invulTimer = Time.time + meleeInvulnerabilityTime;
+                _harleyMat.color = Color.red;
+                _isInvul = true;
+
+                Debug.Log(_harleyPlayer.Health);
+            }
         }
         
     }
     public void BulletDamage(float damage)
     {
-        _harleyPlayer.Health -= damage;
-        //Debug.Log(_harleyPlayer.Health);
+        if(HarleyPlayer.Instance.HarleyShield > 0 && HarleyPlayer.Instance.Haura.enabled)
+        {
+            HarleyPlayer.Instance.HarleyShield -= damage;
+        }
+        if (HarleyPlayer.Instance.HarleyShield < 0 &&  HarleyPlayer.Instance.Haura.enabled)
+        {
+            _harleyPlayer.Health -= HarleyPlayer.Instance.HarleyShield;
+            HarleyPlayer.Instance.HarleyShield = 0;
+            HarleyPlayer.Instance.Haura.enabled = false;
+        }
+        if (HarleyPlayer.Instance.Haura.enabled == false)
+        {
+            _harleyPlayer.Health -= damage;
+            //Debug.Log(_harleyPlayer.Health);
+        }
     }
 }

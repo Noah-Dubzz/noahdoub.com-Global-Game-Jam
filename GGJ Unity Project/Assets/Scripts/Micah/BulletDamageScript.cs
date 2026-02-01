@@ -11,6 +11,7 @@ public class BulletDamageScript : MonoBehaviour
     
     private int _perryLayer;
     private int _harleyLayer;
+    
 
     void Awake()
     {
