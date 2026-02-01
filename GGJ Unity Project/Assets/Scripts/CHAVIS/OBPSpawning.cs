@@ -16,7 +16,7 @@ public class OBPSpawning : MonoBehaviour
     private ObjectPool<ObjectPool> enemyPool3;
     [SerializeField] private List<GameObject> spawnPoints;
 
-    public OBPSpawning Instance;
+    public static OBPSpawning Instance;
 
     public float spawnDelay = 1.0f;
     private float _spawnTimer;

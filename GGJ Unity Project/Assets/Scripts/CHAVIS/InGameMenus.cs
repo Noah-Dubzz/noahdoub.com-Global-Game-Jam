@@ -72,7 +72,7 @@ namespace CHAVIS
             {
                 case GameState.Playing:
                     PowerUpManager.Instance.HidePUSelection();
-                    
+                    OBPSpawning.Instance.PrepareWave();
                     break;
                 case GameState.PowerUpSelection:
                     PowerUpManager.Instance.ShowPUSelection();
