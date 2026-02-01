@@ -60,6 +60,18 @@ public class Enemy1 : MonoBehaviour
         Debug.Log(targetPlayer.name);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Slash"))
+        {
+            takeDamage(HarleyPlayer.Instance.Damage);
+        }
+        if (other.gameObject.CompareTag("AOE"))
+        {
+            takeDamage(HarleyPlayer.Instance.Damage);
+        }
+    }
+
     void takeDamage(float damage)
     {
         health -= damage;
