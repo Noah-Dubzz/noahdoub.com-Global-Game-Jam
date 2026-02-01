@@ -16,7 +16,7 @@ public class MainMenuController : MonoBehaviour
     public void StartGame()
     {
 
-        StartCoroutine(PlaySfxThen(() => SceneManager.LoadScene("SampleScene")));
+        StartCoroutine(PlaySfxThen(() => SceneManager.LoadScene("Game")));
     }
 
     public void OpenOptions()

@@ -98,7 +98,7 @@ public class OBPSpawning : MonoBehaviour
             if (enemiesThisWave <= 0)
             {
                 //Debug.Log("You survived every wave!");
-                //SceneManager.LoadScene("Win");
+                //SceneManager.LoadScene("rmWin");
                 
                 Debug.Log("WAVE FINISHED");
                 _isRunning = false;

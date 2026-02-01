@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy1
   targetPlayer: {fileID: 0}
-  speed: 5
+  speed: 4
   health: 15
   face: {fileID: 2603594549525011808}
   attack: {fileID: 1352353550, guid: 704e717ba2497cc4ca32dca51bf13d95, type: 3}

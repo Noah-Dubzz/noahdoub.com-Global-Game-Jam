@@ -664,13 +664,19 @@ MonoBehaviour:
   faceMove: {fileID: 6568639797677325268}
   TickInterval: 2
   Duration: 4
-  speed: 5
+  speed: 6.5
   jumpHeight: 2
   gravity: -9.81
   DashDuration: 0.5
   DashSpeed: 10
   DashCooldown: 2
+  HealCD: 2
+  ShieldCD: 2
+  TauntCD: 2
   canDash: 1
+  canHeal: 1
+  canShield: 1
+  canTaunt: 1
 --- !u!114 &713658127852056952
 MonoBehaviour:
   m_ObjectHideFlags: 0
