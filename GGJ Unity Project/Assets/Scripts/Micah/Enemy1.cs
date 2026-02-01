@@ -9,6 +9,9 @@ public class Enemy1 : MonoBehaviour
     public float speed = 10f;
     public float health = 100f;
     private Rigidbody _rb;
+    private ObjectPool _objectPool;
+    private float _maxHealth;
+    
     [SerializeField] private SpriteRenderer face;
     [SerializeField]private Sprite attack;
     [SerializeField] private Sprite targeting;
@@ -23,6 +26,14 @@ public class Enemy1 : MonoBehaviour
     {
         _perryManager = FindAnyObjectByType<PerryDamageManager>();
         _harleyManager = FindAnyObjectByType<HarleyDamageManager>();
+        _objectPool = GetComponent<ObjectPool>();
+        _maxHealth = health;
+    }
+    
+    void OnEnable()
+    {
+        health = _maxHealth;
+        FindTargetPlayer();
     }
 
     void Start()
@@ -72,17 +83,23 @@ public class Enemy1 : MonoBehaviour
         }
         if (other.gameObject.CompareTag("AOE"))
         {
-            takeDamage(HarleyPlayer.Instance.Damage);
+            takeDamage(PerryPlayer.Instance.Damage);
         }
     }
 
     void takeDamage(float damage)
     {
         health -= damage;
-        face.sprite = targeting;
         if (health <= 0f)
         {
-            Destroy(gameObject);
+            if (_objectPool != null)
+            {
+                _objectPool.ReleaseObject();
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
     
