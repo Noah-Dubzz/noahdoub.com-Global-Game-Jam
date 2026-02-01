@@ -6,6 +6,8 @@ public class MaskManager : MonoBehaviour
     [SerializeField]public HarleyPlayer harleyPlayer;
     [SerializeField]public PerryPlayer perryPlayer;
     public static MaskManager Instance;
+    [SerializeField] private SpriteRenderer spriteconsent;
+    [SerializeField] public Sprite glasses;
     public Sprite Harleysupp;
     public Sprite Perrysupp;
     public Sprite HarleyDam;
@@ -59,6 +61,7 @@ public class MaskManager : MonoBehaviour
 
     public void MaskFlipper()
     {
+
         if (harleyPlayer != null && perryPlayer != null)
         {
             if (harleyPlayer.MaskFlipConsentH && perryPlayer.MaskFlipConsentP)
@@ -92,7 +95,10 @@ public class MaskManager : MonoBehaviour
 
                 harleyPlayer.MaskFlipConsentH = false;
                 perryPlayer.MaskFlipConsentP = false;
+                PerryPlayer.Instance.consentP.SetActive(false);
+                HarleyPlayer.Instance.consentH.SetActive(false);
             }
+
         }
         else if (harleyPlayer != null)
         {
@@ -118,6 +124,7 @@ public class MaskManager : MonoBehaviour
 
         Debug.Log("Harley is in support Mode");
         HarleyPlayer.Instance.HarleySprite.sprite = Harleysupp;
+        
 
     }
 

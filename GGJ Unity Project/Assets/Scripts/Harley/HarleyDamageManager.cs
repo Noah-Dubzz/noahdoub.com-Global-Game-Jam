@@ -49,7 +49,7 @@ public class HarleyDamageManager : MonoBehaviour
 
     public void MeleeDamage(float damage)
     {
-        Debug.Log("HERE");
+        
         if (Time.time >= _invulTimer && !_isInvul)
         {
             if (HarleyPlayer.Instance.HarleyShield > 0 && HarleyPlayer.Instance.Haura.enabled)
