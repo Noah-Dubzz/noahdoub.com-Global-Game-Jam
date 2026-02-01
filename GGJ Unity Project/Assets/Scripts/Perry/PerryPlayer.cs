@@ -7,11 +7,14 @@ public class PerryPlayer : MonoBehaviour
     public float Health;
     [SerializeField] private float Damage = 5f;
     [SerializeField] public float MaxHealth = 125;
-   
+    [SerializeField] public float PerryShield = 0f;
+    [SerializeField] public float ShieldProtects = 20f;
+    public bool canDamageP = true;
+
     public bool MaskFlipConsentP = false;
 
     public static PerryPlayer Instance;
-    [SerializeField] private MeshRenderer Paura;
+    [SerializeField] public MeshRenderer Paura;
 
     [SerializeField] private Material Supp;
     [SerializeField] private Material Dammage;
@@ -32,6 +35,16 @@ public class PerryPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        if (PerryShield > 0)
+        {
+            Paura.enabled = true;
+
+
+        }
+        
+
         if (MaskManager.Instance.Pdam)
         {
             Paura.material = Dammage;
@@ -48,6 +61,14 @@ public class PerryPlayer : MonoBehaviour
         {
             MaskFlipConsentP = true;
             Debug.Log("Perry has consented for a mask switch");
+            if (MaskManager.Instance.HDam)
+            {
+                canDamageP = true;
+            }
+            if (MaskManager.Instance.Hsupp)
+            {
+                canDamageP = false;
+            }
 
         }
     }

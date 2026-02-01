@@ -237,9 +237,10 @@ GameObject:
   - component: {fileID: 1609991686090905517}
   - component: {fileID: 2507968838867470769}
   - component: {fileID: 3186788497754255316}
-  m_Layer: 0
+  - component: {fileID: 8824718733831482401}
+  m_Layer: 8
   m_Name: aura
-  m_TagString: Untagged
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -274,7 +275,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5886170713244472571}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -316,6 +317,29 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &8824718733831482401
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5886170713244472571}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8761410226198074842
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,9 +629,65 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/Attack[/DualSenseGamepadHID/buttonWest,/DualSenseGamepadHID1/buttonWest,/DualSenseGamepadHID2/buttonWest]'
   - m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8cbf86d2-08d7-4a05-ba82-94c27aea82f9
+    m_ActionName: 'Gameplay/Aiming[/DualSenseGamepadHID/rightStick,/DualSenseGamepadHID1/rightStick,/DualSenseGamepadHID2/rightStick,/DualSenseGamepadHID3/rightStick,/DualSenseGamepadHID4/rightStick]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f68e91a9-cb17-40ca-9ac5-3c0090989d8f
+    m_ActionName: 'UI/Navigate[/DualSenseGamepadHID/leftStick/up,/DualSenseGamepadHID1/leftStick/up,/DualSenseGamepadHID2/leftStick/up,/DualSenseGamepadHID/rightStick/up,/DualSenseGamepadHID1/rightStick/up,/DualSenseGamepadHID2/rightStick/up,/DualSenseGamepadHID/leftStick/down,/DualSenseGamepadHID1/leftStick/down,/DualSenseGamepadHID2/leftStick/down,/DualSenseGamepadHID/rightStick/down,/DualSenseGamepadHID1/rightStick/down,/DualSenseGamepadHID2/rightStick/down,/DualSenseGamepadHID/leftStick/left,/DualSenseGamepadHID1/leftStick/left,/DualSenseGamepadHID2/leftStick/left,/DualSenseGamepadHID/rightStick/left,/DualSenseGamepadHID1/rightStick/left,/DualSenseGamepadHID2/rightStick/left,/DualSenseGamepadHID/leftStick/right,/DualSenseGamepadHID1/leftStick/right,/DualSenseGamepadHID2/leftStick/right,/DualSenseGamepadHID/rightStick/right,/DualSenseGamepadHID1/rightStick/right,/DualSenseGamepadHID2/rightStick/right,/DualSenseGamepadHID/dpad,/DualSenseGamepadHID1/dpad,/DualSenseGamepadHID2/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2e78ff5b-ebdd-4dab-82ca-d72331d88f6d
+    m_ActionName: 'UI/Submit[/Keyboard/enter,/DualSenseGamepadHID/buttonSouth,/DualSenseGamepadHID1/buttonSouth,/DualSenseGamepadHID2/buttonSouth]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8c794a57-2079-47b0-b98e-34e52843b6e5
+    m_ActionName: 'UI/Cancel[/Keyboard/escape,/DualSenseGamepadHID/buttonEast,/DualSenseGamepadHID1/buttonEast,/DualSenseGamepadHID2/buttonEast]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 30298d4f-32b4-4c3a-ac17-f18b6d6e4d6c
+    m_ActionName: 'UI/Point[/Mouse/position,/Pen/position]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 141bc997-916c-46fd-b0c0-e82cd15d6130
+    m_ActionName: 'UI/Click[/Mouse/leftButton,/Pen/tip]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0a2cecf3-6c51-4a4d-9507-3bdb247d6595
+    m_ActionName: 'UI/RightClick[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d38cce06-3bde-4f8f-8ae5-192468f27ce4
+    m_ActionName: 'UI/MiddleClick[/Mouse/middleButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 27712a96-3505-43ba-85d3-352a033d544c
+    m_ActionName: 'UI/ScrollWheel[/Mouse/scroll]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9be6c25f-38f8-4148-920a-d2a28a99ccab
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 93803331-61a5-439b-bf99-c023adee02c2
+    m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
       - m_Target: {fileID: 3460974249289048023}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: Aiming
+        m_MethodName: Jump
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -617,8 +697,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 8cbf86d2-08d7-4a05-ba82-94c27aea82f9
-    m_ActionName: 'Gameplay/Aiming[/DualSenseGamepadHID/rightStick,/DualSenseGamepadHID1/rightStick,/DualSenseGamepadHID2/rightStick,/DualSenseGamepadHID3/rightStick,/DualSenseGamepadHID4/rightStick]'
+    m_ActionId: ea647589-3ee6-4756-a596-da3bafbcb36a
+    m_ActionName: 'Gameplay/Jump[/DualSenseGamepadHID/rightShoulder,/DualSenseGamepadHID1/rightShoulder,/DualSenseGamepadHID2/rightShoulder,/DualSenseGamepadHID3/rightShoulder,/DualSenseGamepadHID4/rightShoulder]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -666,6 +746,9 @@ MonoBehaviour:
   Health: 60
   Damage: 5
   MaxHealth: 125
+  PerryShield: 0
+  ShieldProtects: 20
+  canDamageP: 1
   MaskFlipConsentP: 0
   Paura: {fileID: 3186788497754255316}
   Supp: {fileID: 2100000, guid: 82a9e13242de07344a42465f6078a4a6, type: 2}

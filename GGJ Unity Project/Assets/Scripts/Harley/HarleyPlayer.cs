@@ -8,9 +8,13 @@ public class HarleyPlayer : MonoBehaviour
     [SerializeField] public float Health;
     [SerializeField] public float MaxHealth = 100f;
     [SerializeField] private float Damage = 5f;
+    [SerializeField] public float HarleyShield = 0f;
+    public bool canDamageH = false;
+
+
 
     public static HarleyPlayer Instance;
-    [SerializeField] private MeshRenderer Haura;
+    [SerializeField] public MeshRenderer Haura;
 
 
     [SerializeField] private Material Supp;
@@ -37,6 +41,14 @@ public class HarleyPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (HarleyShield > 0)
+        {
+            Haura.enabled = true;
+
+            
+        }
+        
+
         if (MaskManager.Instance.HDam)
         {
             Haura.material = Dammage;
@@ -55,7 +67,14 @@ public class HarleyPlayer : MonoBehaviour
         {
             MaskFlipConsentH = true;
             Debug.Log("Harley has consented for a mask switch");
-
+            if (MaskManager.Instance.HDam)
+            { 
+            canDamageH = true;
+            }
+            if(MaskManager.Instance.Hsupp)
+            {
+                canDamageH = false;
+            }
             
         }
     }
