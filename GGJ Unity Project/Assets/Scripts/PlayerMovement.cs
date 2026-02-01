@@ -1,3 +1,4 @@
+using CHAVIS;
 using Perry;
 using System;
 using System.Collections;
@@ -6,9 +7,11 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using static UnityEngine.AdaptivePerformance.Provider.AdaptivePerformanceSubsystemDescriptor;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance;
     [SerializeField] HarleyPlayer Harley;
     [SerializeField] PerryPlayer Perry;
 
@@ -58,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        Instance = this;
         controller = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
 
@@ -303,4 +307,24 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(TickInterval);
         canDash = true;
     }
-}
+    public void ApplyPU(PowerUpsSO powerUp)
+    {
+
+        if (powerUp.powerUpEffect == PowerUpEffect.DashDamageIncrease)
+        {
+
+        }
+        if (powerUp.powerUpEffect == PowerUpEffect.TauntDamageIncrease)
+        {
+
+        }
+        if (powerUp.powerUpEffect == PowerUpEffect.ShieldHealthIncrease)
+        {
+
+        }
+        if (powerUp.powerUpEffect == PowerUpEffect.HealthRegenIncrease)
+        {
+
+        }
+    }
+ }

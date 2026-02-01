@@ -1,24 +1,25 @@
 using CHAVIS;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class PowerUps : MonoBehaviour
 {
-    [SerializeField] MeshRenderer puImageRenderer;
+    [SerializeField] SpriteRenderer puImageRenderer;
     [SerializeField] TextMeshPro puTextRenderer;
 
     private PowerUpsSO puInfo;
     public void SetUp(PowerUpsSO powerUp)
     {
         puInfo = powerUp;
-        //puImageRenderer.material = powerUp.powerUpImage;
-        //puTextRenderer.text = powerUp.powerUpTxt;
+        puImageRenderer.sprite = powerUp.image;
+        puTextRenderer.text = powerUp.description;
     }
 
     private void OnMouseDown()
     {
         PowerUpManager.Instance.SelectPowerUp(puInfo);
-        //Hero.Instance.ApplyPU(puInfo);
+        PlayerMovement.Instance.ApplyPU(puInfo);
         Time.timeScale = 1f;
     }
 }
