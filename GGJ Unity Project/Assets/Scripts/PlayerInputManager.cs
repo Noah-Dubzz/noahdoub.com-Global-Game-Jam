@@ -20,24 +20,25 @@ public class PlayerInputManager : MonoBehaviour
     void Update()
     {
         gamepadJoined = joinedGamepads.Count > 0;
-
-        if (!wasdjoined && Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame)
+        if (gamepadJoined)
         {
-            if (joinedGamepads.Count < 2)
+            if (!wasdjoined && Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame)
             {
-                if (!gamepadJoined)
+                if (joinedGamepads.Count < 2)
                 {
-                    PlayerInput.Instantiate(Harleyprefab, pairWithDevice: Keyboard.current);
-                }
-                else if (joinedGamepads.Count == 1)
-                {
-                    PlayerInput.Instantiate(Perryprefab, pairWithDevice: Keyboard.current);
-                }
+                    if (!gamepadJoined)
+                    {
+                        PlayerInput.Instantiate(Harleyprefab, pairWithDevice: Keyboard.current);
+                    }
+                    else if (joinedGamepads.Count == 1)
+                    {
+                        PlayerInput.Instantiate(Perryprefab, pairWithDevice: Keyboard.current);
+                    }
 
-                wasdjoined = true;
+                    wasdjoined = true;
+                }
             }
         }
-
         
         foreach(var gamePad in Gamepad.all)
         {
